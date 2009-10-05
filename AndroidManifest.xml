@@ -14,6 +14,7 @@
         </activity>
     </application>
    	<instrumentation android:name="android.test.InstrumentationTestRunner"
-		android:targetPackage="hk.reality.form" android:label="Forms" />
+		android:targetPackage="hk.reality.stock" android:label="Stock" />
     <uses-sdk android:minSdkVersion="3" />
+    <uses-permission android:name="android.permission.INTERNET" />
 </manifest> 

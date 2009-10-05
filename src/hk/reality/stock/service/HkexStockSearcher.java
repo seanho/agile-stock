@@ -30,7 +30,7 @@ public class HkexStockSearcher implements StockSearcher {
     private static final String USER_AGENT = "AgileStock/0.1.0";
     private static final String BASE_URL = "http://www.hkex.com.hk/invest/company/profile_page_%s.asp?WidCoID=%s&WidCoAbbName=&Month=";
     private static final String XPATH = "//table//table[1]//tr[2]/td[2]/table//tr[1]/td/font";
-    private static final String REGEXP = "^.+\\([^\\)]+\\)$";
+    private static final String REGEXP = "(.+)\\(([0-9]+).+\\)";
     private static final Pattern pattern = Pattern.compile(REGEXP);
     
     private HttpClient client;
@@ -66,12 +66,14 @@ public class HkexStockSearcher implements StockSearcher {
                     String fullName = StringUtils.trim(contentNode.getText().toString());
                     Log.d(TAG, "  name found: " + fullName);
                     Matcher matcher = pattern.matcher(fullName);
-                    if (matcher.matches()) {
-                        String stockName = matcher.group(1);
-                        String stockQuote = matcher.group(2);
+                    if (matcher.find()) {
+                        String stockName = StringUtils.strip(matcher.group(1));
+                        String stockQuote = StringUtils.strip(matcher.group(2));
                         Stock stock = new Stock();
                         stock.setName(stockName);
                         stock.setQuote(stockQuote);
+
+                        Log.d(TAG, "  stock=" + stockName + ", quote=" + stockName);
                         return stock;
                     }
                 }

@@ -26,6 +26,7 @@ public class HkexStockSearcherTest extends TestCase {
         Stock stock8 = searcher.searchStock("8");
         Assert.assertNotNull(stock8);
         Assert.assertNotNull(stock8.getName());
+        
         Assert.assertNotNull(stock8.getQuote());
         Assert.assertEquals("8", stock8.getQuote());        
     }
