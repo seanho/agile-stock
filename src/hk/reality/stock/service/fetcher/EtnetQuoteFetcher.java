@@ -12,17 +12,18 @@ import java.util.Date;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import org.apache.commons.lang.StringUtils;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.methods.HttpGet;
+import org.apache.http.util.EntityUtils;
 import org.htmlcleaner.TagNode;
 import org.htmlcleaner.XPatherException;
 
 public class EtnetQuoteFetcher extends BaseQuoteFetcher {
     private static final String BASE_URL = "http://www.etnet.com.hk/www/tc/stocks/quote.php?code=%s";
-
-    private static final String XPATH_UPDATE = "//body/div/div[10]/div[1]/table[1]/tbody/tr/td[2]/span";
-    private static final String XPATH_BASE =  "//body/div/div[10]/div/table[3]/tbody/tr[2]/td/table";
+    private static final String XPATH_UPDATE = "//div/div[1]/table[1]/tbody/tr/td[2]/span";
+    private static final String XPATH_BASE =  "//div/div/table[3]/tbody/tr[2]/td/table";
     private static final String XPATH_PRICE = "//table/tbody/tr[2]/td[1]";
     
     private static final String XPATH_PRICE_CHANGE = "//table/tbody/tr[2]/td[2]";
@@ -44,8 +45,15 @@ public class EtnetQuoteFetcher extends BaseQuoteFetcher {
             detail.setQuote(quote);
             detail.setSourceUrl(url);
 
+            // download html
             HttpResponse resp = getClient().execute(req);
-            TagNode document = getCleaner().clean(resp.getEntity().getContent());
+            String html = EntityUtils.toString(resp.getEntity());
+            
+            // optimization to reduce html size
+            int start = html.indexOf("<!-- Content -->");
+            int end = html.indexOf("top:-1000px;\">");
+            html = StringUtils.substring(html, start, end);
+            TagNode document = getCleaner().clean(html);
             resp = null;
             
             // set updatedAt

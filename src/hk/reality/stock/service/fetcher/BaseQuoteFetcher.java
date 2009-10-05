@@ -36,7 +36,6 @@ public abstract class BaseQuoteFetcher implements QuoteFetcher {
         prop.setRecognizeUnicodeChars(false);
         prop.setOmitHtmlEnvelope(false);        
         prop.setUseCdataForScriptAndStyle(true);        
-        
     }
 
     public String getFirstElementAsString(Object[] elements) {
