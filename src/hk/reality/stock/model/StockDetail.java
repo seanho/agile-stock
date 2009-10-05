@@ -5,10 +5,11 @@ import java.util.Calendar;
 
 public class StockDetail {
     private Stock stock;
+    private String sourceUrl;
+    private String volume;
     private BigDecimal price;
     private BigDecimal changePrice;
     private BigDecimal changePricePercent;
-    private BigDecimal volume;
     private BigDecimal dayHigh;
     private BigDecimal dayLow;
     private Calendar updatedAt;
@@ -76,7 +77,7 @@ public class StockDetail {
     /**
      * @return the volume
      */
-    public BigDecimal getVolume() {
+    public String getVolume() {
         return volume;
     }
 
@@ -84,7 +85,7 @@ public class StockDetail {
      * @param volume
      *            the volume to set
      */
-    public void setVolume(BigDecimal volume) {
+    public void setVolume(String volume) {
         this.volume = volume;
     }
 
@@ -169,6 +170,20 @@ public class StockDetail {
         } else if (!updatedAt.equals(other.updatedAt))
             return false;
         return true;
+    }
+
+    /**
+     * @return the sourceUrl
+     */
+    public String getSourceUrl() {
+        return sourceUrl;
+    }
+
+    /**
+     * @param sourceUrl the sourceUrl to set
+     */
+    public void setSourceUrl(String sourceUrl) {
+        this.sourceUrl = sourceUrl;
     }
 
 }
