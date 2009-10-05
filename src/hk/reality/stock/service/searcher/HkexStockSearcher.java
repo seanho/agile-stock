@@ -1,9 +1,9 @@
-package hk.reality.stock.service;
+package hk.reality.stock.service.searcher;
 
 import hk.reality.stock.model.Stock;
+import hk.reality.stock.service.Lang;
 import hk.reality.stock.service.exception.DownloadException;
 import hk.reality.stock.service.exception.ParseException;
-import hk.reality.stock.service.searcher.StockSearcher;
 
 import java.io.IOException;
 import java.util.regex.Matcher;
