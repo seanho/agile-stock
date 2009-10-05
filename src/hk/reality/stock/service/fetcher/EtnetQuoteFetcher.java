@@ -24,8 +24,9 @@ public class EtnetQuoteFetcher extends BaseQuoteFetcher {
     private static final String BASE_URL = "http://www.etnet.com.hk/www/tc/stocks/quote.php?code=%s";
     private static final String XPATH_UPDATE = "//div/div[1]/table[1]/tbody/tr/td[2]/span";
     private static final String XPATH_BASE =  "//div/div/table[3]/tbody/tr[2]/td/table";
-    private static final String XPATH_PRICE = "//table/tbody/tr[2]/td[1]";
     
+    private static final String XPATH_NAME = "//table/tbody/tr/td[1]/table/tbody/tr/td[2]";
+    private static final String XPATH_PRICE = "//table/tbody/tr[2]/td[1]";    
     private static final String XPATH_PRICE_CHANGE = "//table/tbody/tr[2]/td[2]";
     private static final String REGEXP_PRICE_CHANGE = "(-?[0-9\\.]+).+\\((-?[0-9\\.]+)%\\)";
     private static final Pattern PATTERN_PRICE_CHANGE = Pattern.compile(REGEXP_PRICE_CHANGE);
@@ -56,9 +57,13 @@ public class EtnetQuoteFetcher extends BaseQuoteFetcher {
             TagNode document = getCleaner().clean(html);
             resp = null;
             
+            // set name
+            String name = getFirstElementAsString(document, XPATH_NAME);
+            detail.setName(name);
+            
             // set updatedAt
             SimpleDateFormat formatter = new SimpleDateFormat(DATE_FORMAT);
-            String updatedAtStr = getFirstElementAsString(document.evaluateXPath(XPATH_UPDATE));
+            String updatedAtStr = getFirstElementAsString(document, XPATH_UPDATE);
             Date updatedDate = formatter.parse(updatedAtStr);
             Calendar updatedAt = Calendar.getInstance();
             updatedAt.setTime(updatedDate);
@@ -67,12 +72,12 @@ public class EtnetQuoteFetcher extends BaseQuoteFetcher {
             TagNode table = getQuoteTable(document, XPATH_BASE);
             
             // set price
-            String pricesStr = getFirstElementAsString(table.evaluateXPath(XPATH_PRICE));
+            String pricesStr = getFirstElementAsString(table, XPATH_PRICE);
             BigDecimal price = new BigDecimal(pricesStr);
             detail.setPrice(price);
             
             // set price change and change %
-            String priceChangesStr = getFirstElementAsString(table.evaluateXPath(XPATH_PRICE_CHANGE));
+            String priceChangesStr = getFirstElementAsString(table, XPATH_PRICE_CHANGE);
             Matcher priceChangeMatcher = PATTERN_PRICE_CHANGE.matcher(priceChangesStr);
             if (priceChangeMatcher.find()) {
                 String priceChangeNumStr = priceChangeMatcher.group(1);
@@ -84,15 +89,15 @@ public class EtnetQuoteFetcher extends BaseQuoteFetcher {
                 detail.setChangePricePercent(priceChangePercent);
             }
             
-            String dayHighStr = getFirstElementAsString(table.evaluateXPath(XPATH_DAY_HIGH));
+            String dayHighStr = getFirstElementAsString(table, XPATH_DAY_HIGH);
             BigDecimal dayHigh = new BigDecimal(dayHighStr);
             detail.setDayHigh(dayHigh);
 
-            String dayLowStr = getFirstElementAsString(table.evaluateXPath(XPATH_DAY_LOW));
+            String dayLowStr = getFirstElementAsString(table, XPATH_DAY_LOW);
             BigDecimal dayLow = new BigDecimal(dayLowStr);
             detail.setDayLow(dayLow);
             
-            String volume = getFirstElementAsString(table.evaluateXPath(XPATH_DAY_VOLUME));
+            String volume = getFirstElementAsString(table, XPATH_DAY_VOLUME);
             detail.setVolume(volume);
             
         } catch (ClientProtocolException e) {

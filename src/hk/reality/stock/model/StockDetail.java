@@ -5,6 +5,7 @@ import java.util.Calendar;
 
 public class StockDetail {
     private String quote;
+    private String name;
     private String sourceUrl;
     private String volume;
     private BigDecimal price;
@@ -183,6 +184,20 @@ public class StockDetail {
         } else if (!updatedAt.equals(other.updatedAt))
             return false;
         return true;
+    }
+
+    /**
+     * @return the name
+     */
+    public String getName() {
+        return name;
+    }
+
+    /**
+     * @param name the name to set
+     */
+    public void setName(String name) {
+        this.name = name;
     }
 
 }

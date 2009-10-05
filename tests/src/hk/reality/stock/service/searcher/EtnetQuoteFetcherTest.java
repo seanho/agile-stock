@@ -21,6 +21,7 @@ public class EtnetQuoteFetcherTest extends TestCase {
     public void testFetch() {
         StockDetail detail = fetcher.fetch("0005");
         Assert.assertNotNull(detail);
+        Assert.assertNotNull(detail.getName());
         Assert.assertNotNull(detail.getPrice());
         Assert.assertNotNull(detail.getChangePrice());
         Assert.assertNotNull(detail.getChangePricePercent());
@@ -29,6 +30,7 @@ public class EtnetQuoteFetcherTest extends TestCase {
         Assert.assertNotNull(detail.getVolume());
         Assert.assertNotNull(detail.getUpdatedAt());
         
+        Log.d("Etnet", "name: " + detail.getName());
         Log.d("Etnet", "price: " + detail.getPrice().toPlainString());
         Log.d("Etnet", "change: " + detail.getChangePrice().toPlainString());
         Log.d("Etnet", "change %: " + detail.getChangePricePercent().toPlainString());

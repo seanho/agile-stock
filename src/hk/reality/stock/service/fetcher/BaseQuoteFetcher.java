@@ -12,6 +12,7 @@ import org.apache.http.params.HttpProtocolParams;
 import org.htmlcleaner.CleanerProperties;
 import org.htmlcleaner.HtmlCleaner;
 import org.htmlcleaner.TagNode;
+import org.htmlcleaner.XPatherException;
 
 public abstract class BaseQuoteFetcher implements QuoteFetcher {
     private HttpClient client;
@@ -38,7 +39,8 @@ public abstract class BaseQuoteFetcher implements QuoteFetcher {
         prop.setUseCdataForScriptAndStyle(true);        
     }
 
-    public String getFirstElementAsString(Object[] elements) {
+    public String getFirstElementAsString(TagNode document, String xpath) throws XPatherException {
+        Object[] elements = document.evaluateXPath(xpath);
         for(int i=0; i<elements.length; i++) {
             if (elements[i] instanceof TagNode) {
                 TagNode node = (TagNode) elements[i];
