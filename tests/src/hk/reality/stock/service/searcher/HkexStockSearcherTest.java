@@ -1,7 +1,7 @@
 package hk.reality.stock.service.searcher;
 
 import hk.reality.stock.model.Stock;
-import hk.reality.stock.service.searcher.searcher.StockSearcher.Lang;
+import hk.reality.stock.service.Lang;
 import junit.framework.Assert;
 import junit.framework.TestCase;
 

@@ -4,7 +4,7 @@ import java.math.BigDecimal;
 import java.util.Calendar;
 
 public class StockDetail {
-    private Stock stock;
+    private String quote;
     private String sourceUrl;
     private String volume;
     private BigDecimal price;
@@ -13,21 +13,6 @@ public class StockDetail {
     private BigDecimal dayHigh;
     private BigDecimal dayLow;
     private Calendar updatedAt;
-
-    /**
-     * @return the stock
-     */
-    public Stock getStock() {
-        return stock;
-    }
-
-    /**
-     * @param stock
-     *            the stock to set
-     */
-    public void setStock(Stock stock) {
-        this.stock = stock;
-    }
 
     /**
      * @return the price
@@ -134,6 +119,34 @@ public class StockDetail {
         this.updatedAt = updatedAt;
     }
 
+    /**
+     * @return the sourceUrl
+     */
+    public String getSourceUrl() {
+        return sourceUrl;
+    }
+
+    /**
+     * @param sourceUrl the sourceUrl to set
+     */
+    public void setSourceUrl(String sourceUrl) {
+        this.sourceUrl = sourceUrl;
+    }
+
+    /**
+     * @return the quote
+     */
+    public String getQuote() {
+        return quote;
+    }
+
+    /**
+     * @param quote the quote to set
+     */
+    public void setQuote(String quote) {
+        this.quote = quote;
+    }
+
     /* (non-Javadoc)
      * @see java.lang.Object#hashCode()
      */
@@ -141,7 +154,7 @@ public class StockDetail {
     public int hashCode() {
         final int prime = 31;
         int result = 1;
-        result = prime * result + ((stock == null) ? 0 : stock.hashCode());
+        result = prime * result + ((quote == null) ? 0 : quote.hashCode());
         result = prime * result
                 + ((updatedAt == null) ? 0 : updatedAt.hashCode());
         return result;
@@ -159,10 +172,10 @@ public class StockDetail {
         if (getClass() != obj.getClass())
             return false;
         StockDetail other = (StockDetail) obj;
-        if (stock == null) {
-            if (other.stock != null)
+        if (quote == null) {
+            if (other.quote != null)
                 return false;
-        } else if (!stock.equals(other.stock))
+        } else if (!quote.equals(other.quote))
             return false;
         if (updatedAt == null) {
             if (other.updatedAt != null)
@@ -170,20 +183,6 @@ public class StockDetail {
         } else if (!updatedAt.equals(other.updatedAt))
             return false;
         return true;
-    }
-
-    /**
-     * @return the sourceUrl
-     */
-    public String getSourceUrl() {
-        return sourceUrl;
-    }
-
-    /**
-     * @param sourceUrl the sourceUrl to set
-     */
-    public void setSourceUrl(String sourceUrl) {
-        this.sourceUrl = sourceUrl;
     }
 
 }

@@ -1,5 +1,6 @@
 package hk.reality.stock.service.searcher;
 
+import hk.reality.stock.Constants;
 import hk.reality.stock.model.Stock;
 import hk.reality.stock.service.Lang;
 import hk.reality.stock.service.exception.DownloadException;
@@ -28,7 +29,6 @@ import android.util.Log;
 
 public class HkexStockSearcher implements StockSearcher {
     private static final String TAG = "HKEX";
-    private static final String USER_AGENT = "AgileStock/0.1.0";
     private static final String BASE_URL = "http://www.hkex.com.hk/invest/company/profile_page_%s.asp?WidCoID=%s&WidCoAbbName=&Month=";
     private static final String XPATH = "//table//table[1]//tr[2]/td[2]/table//tr[1]/td/font";
     private static final String REGEXP = "(.+)\\(([0-9]+).+\\)";
@@ -43,7 +43,7 @@ public class HkexStockSearcher implements StockSearcher {
         HttpParams params = new BasicHttpParams();
         HttpConnectionParams.setConnectionTimeout(params, 30 * 1000);
         HttpConnectionParams.setSoTimeout(params, 30 * 1000);
-        HttpProtocolParams.setUserAgent(params, USER_AGENT);
+        HttpProtocolParams.setUserAgent(params, Constants.USER_AGENT);
         this.client = new DefaultHttpClient(params);
         this.cleaner = new HtmlCleaner();
         this.language = language;
