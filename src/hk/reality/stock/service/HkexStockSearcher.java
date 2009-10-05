@@ -73,7 +73,7 @@ public class HkexStockSearcher implements StockSearcher {
                         stock.setName(stockName);
                         stock.setQuote(stockQuote);
 
-                        Log.d(TAG, "  stock=" + stockName + ", quote=" + stockName);
+                        Log.d(TAG, "  stock=" + stockName + ", quote=" + stockQuote);
                         return stock;
                     }
                 }

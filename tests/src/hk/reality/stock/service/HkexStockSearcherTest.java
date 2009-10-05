@@ -23,6 +23,7 @@ public class HkexStockSearcherTest extends TestCase {
         Assert.assertNotNull(stock5.getQuote());
         Assert.assertEquals("5", stock5.getQuote());
 
+        searcher.setLanguage(Lang.ENG);
         Stock stock8 = searcher.searchStock("8");
         Assert.assertNotNull(stock8);
         Assert.assertNotNull(stock8.getName());
