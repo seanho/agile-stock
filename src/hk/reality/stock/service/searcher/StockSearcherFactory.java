@@ -1,4 +1,7 @@
-package hk.reality.stock.service;
+package hk.reality.stock.service.searcher;
+
+import hk.reality.stock.service.HkexStockSearcher;
+import hk.reality.stock.service.Lang;
 
 
 public class StockSearcherFactory {
