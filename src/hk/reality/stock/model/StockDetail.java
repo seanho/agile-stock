@@ -1,0 +1,174 @@
+package hk.reality.stock.model;
+
+import java.math.BigDecimal;
+import java.util.Calendar;
+
+public class StockDetail {
+    private Stock stock;
+    private BigDecimal price;
+    private BigDecimal changePrice;
+    private BigDecimal changePricePercent;
+    private BigDecimal volume;
+    private BigDecimal dayHigh;
+    private BigDecimal dayLow;
+    private Calendar updatedAt;
+
+    /**
+     * @return the stock
+     */
+    public Stock getStock() {
+        return stock;
+    }
+
+    /**
+     * @param stock
+     *            the stock to set
+     */
+    public void setStock(Stock stock) {
+        this.stock = stock;
+    }
+
+    /**
+     * @return the price
+     */
+    public BigDecimal getPrice() {
+        return price;
+    }
+
+    /**
+     * @param price
+     *            the price to set
+     */
+    public void setPrice(BigDecimal price) {
+        this.price = price;
+    }
+
+    /**
+     * @return the changePrice
+     */
+    public BigDecimal getChangePrice() {
+        return changePrice;
+    }
+
+    /**
+     * @param changePrice
+     *            the changePrice to set
+     */
+    public void setChangePrice(BigDecimal changePrice) {
+        this.changePrice = changePrice;
+    }
+
+    /**
+     * @return the changePricePercent
+     */
+    public BigDecimal getChangePricePercent() {
+        return changePricePercent;
+    }
+
+    /**
+     * @param changePricePercent
+     *            the changePricePercent to set
+     */
+    public void setChangePricePercent(BigDecimal changePricePercent) {
+        this.changePricePercent = changePricePercent;
+    }
+
+    /**
+     * @return the volume
+     */
+    public BigDecimal getVolume() {
+        return volume;
+    }
+
+    /**
+     * @param volume
+     *            the volume to set
+     */
+    public void setVolume(BigDecimal volume) {
+        this.volume = volume;
+    }
+
+    /**
+     * @return the dayHigh
+     */
+    public BigDecimal getDayHigh() {
+        return dayHigh;
+    }
+
+    /**
+     * @param dayHigh
+     *            the dayHigh to set
+     */
+    public void setDayHigh(BigDecimal dayHigh) {
+        this.dayHigh = dayHigh;
+    }
+
+    /**
+     * @return the dayLow
+     */
+    public BigDecimal getDayLow() {
+        return dayLow;
+    }
+
+    /**
+     * @param dayLow
+     *            the dayLow to set
+     */
+    public void setDayLow(BigDecimal dayLow) {
+        this.dayLow = dayLow;
+    }
+
+    /**
+     * @return the updatedAt
+     */
+    public Calendar getUpdatedAt() {
+        return updatedAt;
+    }
+
+    /**
+     * @param updatedAt
+     *            the updatedAt to set
+     */
+    public void setUpdatedAt(Calendar updatedAt) {
+        this.updatedAt = updatedAt;
+    }
+
+    /* (non-Javadoc)
+     * @see java.lang.Object#hashCode()
+     */
+    @Override
+    public int hashCode() {
+        final int prime = 31;
+        int result = 1;
+        result = prime * result + ((stock == null) ? 0 : stock.hashCode());
+        result = prime * result
+                + ((updatedAt == null) ? 0 : updatedAt.hashCode());
+        return result;
+    }
+
+    /* (non-Javadoc)
+     * @see java.lang.Object#equals(java.lang.Object)
+     */
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj)
+            return true;
+        if (obj == null)
+            return false;
+        if (getClass() != obj.getClass())
+            return false;
+        StockDetail other = (StockDetail) obj;
+        if (stock == null) {
+            if (other.stock != null)
+                return false;
+        } else if (!stock.equals(other.stock))
+            return false;
+        if (updatedAt == null) {
+            if (other.updatedAt != null)
+                return false;
+        } else if (!updatedAt.equals(other.updatedAt))
+            return false;
+        return true;
+    }
+
+}
