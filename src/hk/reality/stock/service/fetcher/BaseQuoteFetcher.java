@@ -39,7 +39,31 @@ public abstract class BaseQuoteFetcher implements QuoteFetcher {
         prop.setUseCdataForScriptAndStyle(true);        
     }
 
-    public String getFirstElementAsString(TagNode document, String xpath) throws XPatherException {
+    /**
+     * From the document, search the specified xpath, return the TagNode of first matched element
+     * @param document
+     * @param xpath
+     * @return
+     * @throws XPatherException
+     */
+    public TagNode getFirstMatchedElement(TagNode document, String xpath) throws XPatherException {
+        Object[] xpathResult = document.evaluateXPath(xpath);
+        for(int i=0; i<xpathResult.length; i++) {
+            if (xpathResult[i] instanceof TagNode) {
+                return (TagNode) xpathResult[i];
+            }
+        }
+        return null;
+    }
+    
+    /**
+     * From the document, search the specified xpath, return the content text of first matched element
+     * @param document
+     * @param xpath
+     * @return
+     * @throws XPatherException
+     */
+    public String getFirstMatchedElementContent(TagNode document, String xpath) throws XPatherException {
         Object[] elements = document.evaluateXPath(xpath);
         for(int i=0; i<elements.length; i++) {
             if (elements[i] instanceof TagNode) {

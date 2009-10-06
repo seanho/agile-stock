@@ -1,0 +1,8 @@
+<TableLayout android:layout_width="fill_parent"
+	android:layout_height="fill_parent" xmlns:android="http://schemas.android.com/apk/res/android"
+	android:padding="5dp">
+	<TableRow android:id="@+id/TableRow05" android:layout_width="wrap_content" android:layout_height="wrap_content"><TableLayout android:id="@+id/TableLayout01" android:layout_height="wrap_content" android:layout_width="fill_parent" android:layout_weight="1"><TableRow android:id="@+id/TableRow02" android:layout_height="wrap_content" android:layout_width="fill_parent" android:layout_weight="1"><TextView android:textAppearance="?android:attr/textAppearanceLarge" android:id="@+id/name" android:layout_height="wrap_content" android:lines="1" android:marqueeRepeatLimit="marquee_forever" android:ellipsize="marquee" android:layout_width="180sp" android:text="長江實業"></TextView><TextView android:textAppearance="?android:attr/textAppearanceLarge" android:id="@+id/price" android:layout_height="wrap_content" android:text="94.100" android:layout_width="fill_parent" android:layout_weight="1" android:gravity="right" android:paddingRight="5sp"></TextView>
+</TableRow><TableRow android:id="@+id/TableRow04" android:layout_width="wrap_content" android:layout_height="wrap_content"><TextView android:layout_height="wrap_content" android:id="@+id/quote" android:text="00001" android:layout_width="130sp"></TextView><TextView android:layout_height="wrap_content" android:id="@+id/change" android:layout_width="fill_parent" android:layout_weight="1" android:gravity="right" android:text="+1.5 (+0.02%) "></TextView>
+</TableRow></TableLayout><ImageButton android:id="@+id/more" style="@style/MoreButton" android:layout_width="wrap_content" android:layout_height="wrap_content" /></TableRow>
+
+</TableLayout>
