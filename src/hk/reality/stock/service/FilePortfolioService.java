@@ -17,18 +17,23 @@ import java.util.Vector;
 
 import org.apache.commons.io.IOUtils;
 
+import android.util.Log;
+
 public class FilePortfolioService implements PortfolioService {
 	private static final String STORAGE_FILE = "portfolio.xml";
+	private static final String TAG = "FilePortfolioService";
 	private File baseDirectory;
 	private List<Portfolio> portfolios;
 	
 	public FilePortfolioService(File directory) {
+		Log.i(TAG, "init portfolio service: " + directory.getAbsolutePath());
 		this.baseDirectory = directory;
 		this.portfolios = new Vector<Portfolio>();
 	}
 
 	@Override
 	public void create(Portfolio p) {
+		Log.i(TAG, "create portfolio: " + p.getName());
 		p.setId(UUID.randomUUID().toString());
 		portfolios.add(p);
 		save();
@@ -36,12 +41,14 @@ public class FilePortfolioService implements PortfolioService {
 
 	@Override
 	public void delete(Portfolio p) {
+		Log.i(TAG, "delete portfolio: " + p.getName());
 		portfolios.remove(p);
 		save();
 	}
 
 	@Override
 	public List<Portfolio> list() {
+		Log.i(TAG, "list portfolio ");
 		if (this.portfolios.size() == 0) {
 			Portfolio p = new Portfolio();
 			p.setName("");
@@ -53,6 +60,8 @@ public class FilePortfolioService implements PortfolioService {
 
 	@Override
 	public void update(Portfolio p) {
+		Log.i(TAG, "update portfolio: " + p.getName());
+		
 		int pos = portfolios.indexOf(p);
 		if (pos > -1) {
 			Portfolio orig = portfolios.get(pos);
