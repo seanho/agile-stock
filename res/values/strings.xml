@@ -2,4 +2,8 @@
 <resources>
     <string name="hello">Hello World, PortfolioActivity!</string>
     <string name="app_name">Agile Stock</string>
+    
+    <string name="refresh_label">Refresh</string>
+    <string name="add_label">Add</string>
+	
 </resources>
