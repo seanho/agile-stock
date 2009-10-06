@@ -3,7 +3,15 @@
     <string name="hello">Hello World, PortfolioActivity!</string>
     <string name="app_name">Agile Stock</string>
     
+    <string name="ok_label">OK</string>
+    <string name="cancel_label">Cancel</string>
+    
     <string name="refresh_label">Refresh</string>
     <string name="add_label">Add</string>
-	
+    
+    <string name="action_open">More Detail ...</string>
+    <string name="action_delete">Delete</string>
+    
+    <string name="add_stock">Add Stock to portfolio</string>
+	<string name="add_stock_detail">Please enter a Hong Kong Stock Quote (e.g. 00001)</string>
 </resources>

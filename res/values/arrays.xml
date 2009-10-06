@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <array name="stock_action">
+  	<item>@string/action_open</item>
+    <item>@string/action_delete</item>
+  </array>
+</resources>

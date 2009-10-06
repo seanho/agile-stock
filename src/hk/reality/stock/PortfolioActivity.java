@@ -17,7 +17,9 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.EditText;
+import android.widget.ListView;
 
 public class PortfolioActivity extends ListActivity {
     private static final String TAG = "PortfolioActivity";
@@ -25,6 +27,9 @@ public class PortfolioActivity extends ListActivity {
     
     private static final int DIALOG_ADD_STOCK = 100; 
     private static final int DIALOG_EDIT_VIEW = 1200000;
+    private static final int MENU_OPEN = 0; 
+    private static final int MENU_DEL = 1; 
+    
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);        
@@ -45,7 +50,6 @@ public class PortfolioActivity extends ListActivity {
 
         adapter.add(stock);
     }
-    
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -77,16 +81,16 @@ public class PortfolioActivity extends ListActivity {
             final EditText input = new EditText(this);
             input.setId(DIALOG_EDIT_VIEW);
             AlertDialog dialog = new AlertDialog.Builder(this)
-                .setTitle("Stock Quote")
-                .setMessage("Please enter a Hong Kong Stock Quote (e.g. 00001)")
+                .setTitle(R.string.add_stock)
+                .setMessage(R.string.add_stock_detail)
                 .setCancelable(true)
-                .setPositiveButton("OK", new OnClickListener(){
+                .setPositiveButton(R.string.ok_label, new OnClickListener(){
                     public void onClick(DialogInterface dialog, int which) {
                         String value = input.getText().toString();
                         Log.d(TAG, "entered quote: " + value);
                     }
                 })
-                .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {  
+                .setNegativeButton(R.string.cancel_label, new DialogInterface.OnClickListener() {  
                     public void onClick(DialogInterface dialog, int whichButton) {
                         Log.d(TAG, "cancelled");
                     }
@@ -105,7 +109,35 @@ public class PortfolioActivity extends ListActivity {
         case DIALOG_ADD_STOCK:
             EditText input = (EditText) d.findViewById(DIALOG_EDIT_VIEW);;  
             input.setText("");
+            break;
         default:
         }
+    }
+
+    @Override
+    protected void onListItemClick(ListView l, View v, int position, long id) {
+        super.onListItemClick(l, v, position, id);
+        Stock stock = adapter.getItem(position);
+        String name = stock.getDetail() == null ? stock.getQuote() : stock.getDetail().getName();
+
+        new AlertDialog.Builder(this)
+            .setTitle(name)
+            .setItems(R.array.stock_action,
+                    new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialoginterface, int i) {
+                            switch (i) {
+                            case MENU_OPEN:
+                                Log.d(TAG, "open url ...");
+                                break;
+                            case MENU_DEL:
+                                Log.d(TAG, "delete stock ...");
+                                break;
+                            default:
+                                throw new IllegalArgumentException(
+                                        "unhandled menu item" + i);
+                            }
+                        }
+                    })
+            .show();
     }
 }
