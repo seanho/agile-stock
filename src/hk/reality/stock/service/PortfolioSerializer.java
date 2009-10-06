@@ -3,17 +3,27 @@ package hk.reality.stock.service;
 import hk.reality.stock.model.Portfolio;
 import hk.reality.stock.model.Stock;
 
+import java.io.Reader;
+import java.util.List;
+
 import com.thoughtworks.xstream.XStream;
 
 public class PortfolioSerializer {
-	public static String toXML(Portfolio portfolio) {
+	public static String toXML(List<Portfolio> portfolios) {
 		XStream xstream = getXStream();
-		return xstream.toXML(portfolio);
+		return xstream.toXML(portfolios);
+	}
+
+	@SuppressWarnings("unchecked")
+	public static List<Portfolio> fromXML(String xml) {
+		XStream xstream = getXStream();
+		return (List<Portfolio>) xstream.fromXML(xml);
 	}
 	
-	public static Portfolio fromXML(String xml) {
+	@SuppressWarnings("unchecked")
+	public static List<Portfolio> fromXML(Reader xml) {
 		XStream xstream = getXStream();
-		return (Portfolio) xstream.fromXML(xml);
+		return (List<Portfolio>) xstream.fromXML(xml);
 	}
 	
 	private static XStream getXStream() {
