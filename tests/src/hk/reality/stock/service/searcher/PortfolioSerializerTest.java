@@ -29,7 +29,6 @@ public class PortfolioSerializerTest extends TestCase {
         port.add(p);
         
         Stock s1 = new Stock();
-        s1.setName("PCCW");
         s1.setQuote("8");        
         p.getStocks().add(s1);
         

@@ -4,24 +4,8 @@ import java.io.Serializable;
 
 public class Stock implements Serializable {
 	private static final long serialVersionUID = -6452165113616479803L;
-	private String name;
-    private String quote;
+	private String quote;
     private StockDetail detail; 
-
-    /**
-     * @return the name
-     */
-    public String getName() {
-        return name;
-    }
-
-    /**
-     * @param name
-     *            the name to set
-     */
-    public void setName(String name) {
-        this.name = name;
-    }
 
     /**
      * @return the quote
