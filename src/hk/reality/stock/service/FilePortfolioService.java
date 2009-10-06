@@ -12,6 +12,7 @@ import java.io.Writer;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.UUID;
 import java.util.Vector;
 
 import org.apache.commons.io.IOUtils;
@@ -27,20 +28,23 @@ public class FilePortfolioService implements PortfolioService {
 	}
 
 	@Override
-	public void create(Portfolio portfolio) {
-
+	public void create(Portfolio p) {
+		p.setId(UUID.randomUUID().toString());
+		portfolios.add(p);
+		save();
 	}
 
 	@Override
-	public void delete(Portfolio portfolio) {
-
+	public void delete(Portfolio p) {
+		portfolios.remove(p);
+		save();
 	}
 
 	@Override
 	public List<Portfolio> list() {
 		if (this.portfolios.size() == 0) {
 			Portfolio p = new Portfolio();
-			p.setName("My Portfolio");
+			p.setName("");
 			p.setStocks(new ArrayList<Stock>());
 			this.portfolios.add(p);
 		}
@@ -48,8 +52,16 @@ public class FilePortfolioService implements PortfolioService {
 	}
 
 	@Override
-	public void update(Portfolio portfolio) {
-
+	public void update(Portfolio p) {
+		int pos = portfolios.indexOf(p);
+		if (pos > -1) {
+			Portfolio orig = portfolios.get(pos);
+			orig.setName(p.getName());
+			orig.setStocks(p.getStocks());
+		} else {
+			throw new IllegalArgumentException("record not found");
+		}
+		save();
 	}
 	
 	private void save() {
