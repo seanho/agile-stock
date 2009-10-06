@@ -1,7 +1,10 @@
 package hk.reality.stock.model;
 
-public class Stock {
-    private String name;
+import java.io.Serializable;
+
+public class Stock implements Serializable {
+	private static final long serialVersionUID = -6452165113616479803L;
+	private String name;
     private String quote;
 
     /**
