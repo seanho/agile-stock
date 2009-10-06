@@ -1,9 +1,11 @@
 package hk.reality.stock.model;
 
+import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Calendar;
 
-public class StockDetail {
+public class StockDetail implements Serializable {
+    private static final long serialVersionUID = -6897978978998L;
     private String quote;
     private String name;
     private String sourceUrl;

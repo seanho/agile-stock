@@ -6,6 +6,7 @@ public class Stock implements Serializable {
 	private static final long serialVersionUID = -6452165113616479803L;
 	private String name;
     private String quote;
+    private StockDetail detail; 
 
     /**
      * @return the name
@@ -66,5 +67,19 @@ public class Stock implements Serializable {
         } else if (!quote.equals(other.quote))
             return false;
         return true;
+    }
+
+    /**
+     * @return the detail
+     */
+    public StockDetail getDetail() {
+        return detail;
+    }
+
+    /**
+     * @param detail the detail to set
+     */
+    public void setDetail(StockDetail detail) {
+        this.detail = detail;
     }
 }
