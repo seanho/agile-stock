@@ -33,12 +33,12 @@ public class StockAdapter extends ArrayAdapter<Stock> {
         Stock stock = getItem(position);
         StockDetail detail = stock.getDetail();
         if (detail != null) {
-            name.setText(detail.getName());
+            name.setText(stock.getName());
             quote.setText(detail.getQuote());
             price.setText(String.format("%.03f", detail.getPrice()));
             change.setText(String.format("%+.03f (%.03f%%)", detail.getChangePrice(), detail.getChangePricePercent()));
         } else {
-            name.setText("Loading");
+            name.setText(stock.getName());
             quote.setText(stock.getQuote());
             price.setText("----");
             change.setText("---- (---)");
