@@ -5,8 +5,10 @@ import hk.reality.stock.service.exception.StorageException;
 
 import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.Reader;
 import java.io.Writer;
 import java.util.Collections;
 import java.util.List;
@@ -26,7 +28,7 @@ public class FilePortfolioService implements PortfolioService {
 	public FilePortfolioService(File directory) {
 		Log.i(TAG, "init portfolio service: " + directory.getAbsolutePath());
 		this.baseDirectory = directory;
-		this.portfolios = new Vector<Portfolio>();
+		this.portfolios = loadOrCreateNew();
 	}
 
 	@Override
@@ -65,7 +67,28 @@ public class FilePortfolioService implements PortfolioService {
 		save();
 	}
 	
+	private List<Portfolio> loadOrCreateNew() {
+        Log.i(TAG, "loading portfolio file ...");
+        File store = new File(baseDirectory, STORAGE_FILE);
+        Reader reader = null;
+        try {
+            if (!store.exists()) {
+                return new Vector<Portfolio>();
+            }
+            
+            reader = new FileReader(store);
+            return PortfolioSerializer.fromXML(reader);
+        } catch (IOException e) {
+            throw new StorageException("failed storing datafile", e);
+        
+        } finally {
+            IOUtils.closeQuietly(reader);
+        
+        }
+	}
+	
 	private void save() {
+	    Log.i(TAG, "saving portfolio file ...");
 		File store = new File(baseDirectory, STORAGE_FILE);
 		Writer writer = null;
 		try {
@@ -76,7 +99,8 @@ public class FilePortfolioService implements PortfolioService {
 			writer = new BufferedWriter(new FileWriter(store));
 			String xml = PortfolioSerializer.toXML(portfolios);
 			IOUtils.write(xml, writer);
-		
+			Log.i(TAG, "save completed");
+
 		} catch (IOException e) {
 			throw new StorageException("failed storing datafile", e);
 		
