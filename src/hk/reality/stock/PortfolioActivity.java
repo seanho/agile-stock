@@ -45,6 +45,7 @@ public class PortfolioActivity extends ListActivity {
 
     public void refreshStock() {
         List<Stock> stocks = StockApplication.getCurrentPortfolio().getStocks();
+        adapter.clear();
         for(Stock s : stocks) {
             adapter.add(s);
         }
@@ -107,7 +108,6 @@ public class PortfolioActivity extends ListActivity {
                     public void onClick(DialogInterface dialog, int which) {
                         String value = input.getText().toString();
                         Log.d(TAG, "entered quote: " + value);
-
                         searchTask = new StockSearchTask(PortfolioActivity.this);
                         searchTask.execute("CHI", value);
                     }
@@ -139,8 +139,8 @@ public class PortfolioActivity extends ListActivity {
     @Override
     protected void onListItemClick(ListView l, View v, int position, long id) {
         super.onListItemClick(l, v, position, id);
-        Stock stock = adapter.getItem(position);
-        String name = stock.getDetail() == null ? stock.getQuote() : stock.getName();
+        final Stock stock = adapter.getItem(position);
+        final String name = stock.getDetail() == null ? stock.getQuote() : stock.getName();
 
         new AlertDialog.Builder(this)
             .setTitle(name)
@@ -153,6 +153,9 @@ public class PortfolioActivity extends ListActivity {
                                 break;
                             case MENU_DEL:
                                 Log.d(TAG, "delete stock ...");
+                                StockApplication.getCurrentPortfolio().getStocks().remove(stock);
+                                StockApplication.getPortfolioService().update(StockApplication.getCurrentPortfolio());
+                                refreshStock();
                                 break;
                             default:
                                 throw new IllegalArgumentException(
