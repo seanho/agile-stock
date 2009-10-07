@@ -1,12 +1,10 @@
 package hk.reality.stock;
 
 import hk.reality.stock.model.Stock;
-import hk.reality.stock.model.StockDetail;
 import hk.reality.stock.service.searcher.StockSearchTask;
 import hk.reality.stock.view.StockAdapter;
 
-import java.math.BigDecimal;
-import java.util.Calendar;
+import java.util.List;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
@@ -40,22 +38,16 @@ public class PortfolioActivity extends ListActivity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);        
-        adapter = new StockAdapter(this);
+        adapter = new StockAdapter(this);        
         setListAdapter(adapter);
-        
-        Stock stock = new Stock();
-        stock.setQuote("0005");
-        stock.setName("匯豐控股");
+        refreshStock();
+    }
 
-        StockDetail d = new StockDetail();
-        d.setQuote("0005");
-        d.setChangePrice(new BigDecimal("+1.2"));
-        d.setChangePricePercent(new BigDecimal("+0.8"));
-        d.setPrice(new BigDecimal("88.6"));
-        d.setUpdatedAt(Calendar.getInstance());
-        stock.setDetail(d);
-
-        adapter.add(stock);
+    public void refreshStock() {
+        List<Stock> stocks = StockApplication.getCurrentPortfolio().getStocks();
+        for(Stock s : stocks) {
+            adapter.add(s);
+        }
     }
 
     @Override

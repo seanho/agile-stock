@@ -54,7 +54,7 @@ public class HkexStockSearcher implements StockSearcher {
         HttpGet req = new HttpGet(url);
         try {
             HttpResponse resp = client.execute(req);
-            String content = EntityUtils.toString(resp.getEntity());
+            String content = EntityUtils.toString(resp.getEntity(), "Big5");
             int begin = content.indexOf(Matcher.quoteReplacement(BEGIN));
             int end = content.indexOf(END, begin);
             if (begin > -1 && end > -1) {

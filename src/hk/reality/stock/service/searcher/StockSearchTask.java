@@ -69,6 +69,7 @@ public class StockSearchTask extends AsyncTask<String, Void, Stock> {
             } else {
                 stocks.add(result);
                 StockApplication.getPortfolioService().update(portfolio);
+                activity.refreshStock();
                 Toast.makeText(activity, R.string.msg_stock_added, Toast.LENGTH_LONG).show();
 
             }            
