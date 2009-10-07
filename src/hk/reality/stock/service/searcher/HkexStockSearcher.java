@@ -21,22 +21,20 @@ import org.apache.http.params.HttpConnectionParams;
 import org.apache.http.params.HttpParams;
 import org.apache.http.params.HttpProtocolParams;
 import org.apache.http.util.EntityUtils;
-import org.htmlcleaner.HtmlCleaner;
-import org.htmlcleaner.TagNode;
-import org.htmlcleaner.XPatherException;
 
 import android.util.Log;
 
 public class HkexStockSearcher implements StockSearcher {
     private static final String TAG = "HKEX";
     private static final String BASE_URL = "http://www.hkex.com.hk/invest/company/profile_page_%s.asp?WidCoID=%s&WidCoAbbName=&Month=";
-    private static final String XPATH = "//table//table[1]//tr[2]/td[2]/table//tr[1]/td/font";
+
+    private static final String BEGIN = "#66CCFF\">";
+    private static final String END = "</font>";
+
     private static final String REGEXP = "(.+)\\(([0-9]+).+\\)";
     private static final Pattern pattern = Pattern.compile(REGEXP);
     
-    private HttpClient client;
-    private HtmlCleaner cleaner;
-    
+    private HttpClient client;    
     private Lang language;
 
     public HkexStockSearcher(Lang language) {        
@@ -45,12 +43,11 @@ public class HkexStockSearcher implements StockSearcher {
         HttpConnectionParams.setSoTimeout(params, 30 * 1000);
         HttpProtocolParams.setUserAgent(params, Constants.USER_AGENT);
         this.client = new DefaultHttpClient(params);
-        this.cleaner = new HtmlCleaner();
         this.language = language;
     }
     
     @Override
-    public Stock searchStock(String quote) {
+    public Stock searchStock(String quote) throws DownloadException, ParseException {
         Log.i(TAG, "search stock: " + quote + ", lang=" + language);
 
         String url = getStockURL(quote, language);
@@ -58,32 +55,31 @@ public class HkexStockSearcher implements StockSearcher {
         try {
             HttpResponse resp = client.execute(req);
             String content = EntityUtils.toString(resp.getEntity());
-            TagNode document = cleaner.clean(content);
-            Object[] xpathResult = document.evaluateXPath(XPATH);
-
-            for(Object o : xpathResult) {
-                if (o instanceof TagNode) {
-                    TagNode contentNode = (TagNode) o;
-                    String fullName = StringUtils.trim(contentNode.getText().toString());
-                    Log.d(TAG, "  name found: " + fullName);
-                    Matcher matcher = pattern.matcher(fullName);
-                    if (matcher.find()) {
-                        String stockName = StringUtils.strip(matcher.group(1));
-                        String stockQuote = StringUtils.strip(matcher.group(2));
-                        Stock stock = new Stock();
-                        stock.setQuote(stockQuote);
-
-                        Log.d(TAG, "  stock=" + stockName + ", quote=" + stockQuote);
-                        return stock;
-                    }
+            int begin = content.indexOf(Matcher.quoteReplacement(BEGIN));
+            int end = content.indexOf(END, begin);
+            if (begin > -1 && end > -1) {
+                String value = StringUtils.substring(content, begin + BEGIN.length(), end);
+                value = StringUtils.strip(value).replaceAll("[\n\r]*", "");
+                Log.i(TAG, "result text: " + value);
+                
+                Matcher m = pattern.matcher(value);
+                if (m.find()) {
+                    String name = StringUtils.strip(m.group(1));
+                    String quoteNumber = StringUtils.strip(m.group(2));
+                    Stock s = new Stock();
+                    s.setName(name);
+                    s.setQuote(quoteNumber);
+                    return s;
+                } else {
+                    Log.w(TAG, "result text not match target pattern " );
                 }
+            } else {
+                Log.w(TAG, "begin or end not found " + begin + ", " + end );
             }
         } catch (ClientProtocolException e) {
             throw new DownloadException("error searching stock", e);
         } catch (IOException e) {
             throw new DownloadException("error searching stock", e);
-        } catch (XPatherException e) {
-            throw new ParseException("unexpected result while searching stock", e);
         }
         throw new ParseException("stock quote not found");
     }

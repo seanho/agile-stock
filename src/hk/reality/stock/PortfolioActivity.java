@@ -2,6 +2,7 @@ package hk.reality.stock;
 
 import hk.reality.stock.model.Stock;
 import hk.reality.stock.model.StockDetail;
+import hk.reality.stock.service.searcher.StockSearchTask;
 import hk.reality.stock.view.StockAdapter;
 
 import java.math.BigDecimal;
@@ -10,6 +11,7 @@ import java.util.Calendar;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.ListActivity;
+import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.DialogInterface.OnClickListener;
 import android.os.Bundle;
@@ -23,12 +25,17 @@ import android.widget.ListView;
 
 public class PortfolioActivity extends ListActivity {
     private static final String TAG = "PortfolioActivity";
+
+    public static final int DIALOG_ADD_STOCK = 100;
+    public static final int DIALOG_ADD_IN_PROGRESS = 101;
+    public static final int DIALOG_ERR_DOWNLOAD = 400;
+    public static final int DIALOG_ERR_QUOTE = 401;
+    public static final int ID_EDIT_VIEW = 1200000;
+    public static final int MENU_OPEN = 0; 
+    public static final int MENU_DEL = 1;
+
     private StockAdapter adapter;
-    
-    private static final int DIALOG_ADD_STOCK = 100; 
-    private static final int DIALOG_EDIT_VIEW = 1200000;
-    private static final int MENU_OPEN = 0; 
-    private static final int MENU_DEL = 1; 
+    private StockSearchTask searchTask;
     
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -38,13 +45,13 @@ public class PortfolioActivity extends ListActivity {
         
         Stock stock = new Stock();
         stock.setQuote("0005");
-        
+        stock.setName("匯豐控股");
+
         StockDetail d = new StockDetail();
         d.setQuote("0005");
         d.setChangePrice(new BigDecimal("+1.2"));
         d.setChangePricePercent(new BigDecimal("+0.8"));
         d.setPrice(new BigDecimal("88.6"));
-        d.setName("匯豐控股");
         d.setUpdatedAt(Calendar.getInstance());
         stock.setDetail(d);
 
@@ -77,10 +84,30 @@ public class PortfolioActivity extends ListActivity {
     @Override
     protected Dialog onCreateDialog(int id) {
         switch (id) {
+        case DIALOG_ERR_DOWNLOAD:
+            AlertDialog downloadErrDialog = new AlertDialog.Builder(this)
+                .setTitle(R.string.msg_error_download)
+                .setMessage(R.string.msg_error_download_details)
+                .setCancelable(true)
+                .create();
+            return downloadErrDialog;
+        case DIALOG_ERR_QUOTE:
+            final AlertDialog quoteErrDialog = new AlertDialog.Builder(this)
+                .setTitle(R.string.msg_error_unexpected)
+                .setMessage(R.string.msg_error_unexpected_details)
+                .setCancelable(true)
+                .create();
+            return quoteErrDialog;
+        case DIALOG_ADD_IN_PROGRESS:
+            ProgressDialog pd = new ProgressDialog(this);
+            pd.setIndeterminate(true);
+            pd.setMessage(getResources().getString(R.string.msg_val_stock));
+            pd.setCancelable(false);
+            return pd;
         case DIALOG_ADD_STOCK:
             final EditText input = new EditText(this);
-            input.setId(DIALOG_EDIT_VIEW);
-            AlertDialog dialog = new AlertDialog.Builder(this)
+            input.setId(ID_EDIT_VIEW);
+            AlertDialog addDialog = new AlertDialog.Builder(this)
                 .setTitle(R.string.add_stock)
                 .setMessage(R.string.add_stock_detail)
                 .setCancelable(true)
@@ -88,6 +115,9 @@ public class PortfolioActivity extends ListActivity {
                     public void onClick(DialogInterface dialog, int which) {
                         String value = input.getText().toString();
                         Log.d(TAG, "entered quote: " + value);
+
+                        searchTask = new StockSearchTask(PortfolioActivity.this);
+                        searchTask.execute("CHI", value);
                     }
                 })
                 .setNegativeButton(R.string.cancel_label, new DialogInterface.OnClickListener() {  
@@ -97,7 +127,7 @@ public class PortfolioActivity extends ListActivity {
                 })
                 .setView(input)
                 .create();
-            return dialog;
+            return addDialog;
         default:
         }
         return null;
@@ -107,7 +137,7 @@ public class PortfolioActivity extends ListActivity {
     protected void onPrepareDialog(int id, Dialog d) {
         switch (id) {
         case DIALOG_ADD_STOCK:
-            EditText input = (EditText) d.findViewById(DIALOG_EDIT_VIEW);;  
+            EditText input = (EditText) d.findViewById(ID_EDIT_VIEW);;  
             input.setText("");
             break;
         default:
@@ -118,7 +148,7 @@ public class PortfolioActivity extends ListActivity {
     protected void onListItemClick(ListView l, View v, int position, long id) {
         super.onListItemClick(l, v, position, id);
         Stock stock = adapter.getItem(position);
-        String name = stock.getDetail() == null ? stock.getQuote() : stock.getDetail().getName();
+        String name = stock.getDetail() == null ? stock.getQuote() : stock.getName();
 
         new AlertDialog.Builder(this)
             .setTitle(name)

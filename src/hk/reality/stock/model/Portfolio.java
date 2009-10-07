@@ -8,6 +8,9 @@ public class Portfolio implements Serializable {
 	private String id;
 	private String name;
     private List<Stock> stocks;
+    
+    public Portfolio() {
+    }
 
     /**
      * @return the name

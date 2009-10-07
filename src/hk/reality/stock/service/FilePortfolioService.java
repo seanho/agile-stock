@@ -1,7 +1,6 @@
 package hk.reality.stock.service;
 
 import hk.reality.stock.model.Portfolio;
-import hk.reality.stock.model.Stock;
 import hk.reality.stock.service.exception.StorageException;
 
 import java.io.BufferedWriter;
@@ -9,7 +8,6 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.Writer;
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.UUID;
@@ -49,12 +47,6 @@ public class FilePortfolioService implements PortfolioService {
 	@Override
 	public List<Portfolio> list() {
 		Log.i(TAG, "list portfolio ");
-		if (this.portfolios.size() == 0) {
-			Portfolio p = new Portfolio();
-			p.setName("");
-			p.setStocks(new ArrayList<Stock>());
-			this.portfolios.add(p);
-		}
 		return Collections.unmodifiableList(this.portfolios);
 	}
 

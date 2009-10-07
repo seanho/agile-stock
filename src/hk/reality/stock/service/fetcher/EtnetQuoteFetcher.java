@@ -57,10 +57,6 @@ public class EtnetQuoteFetcher extends BaseQuoteFetcher {
             TagNode document = getCleaner().clean(html);
             resp = null;
             
-            // set name
-            String name = getFirstMatchedElementContent(document, XPATH_NAME);
-            detail.setName(name);
-            
             // set updatedAt
             SimpleDateFormat formatter = new SimpleDateFormat(DATE_FORMAT);
             String updatedAtStr = getFirstMatchedElementContent(document, XPATH_UPDATE);

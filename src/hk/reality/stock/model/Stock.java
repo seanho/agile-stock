@@ -23,6 +23,34 @@ public class Stock implements Serializable {
         this.quote = quote;
     }
 
+    /**
+     * @return the detail
+     */
+    public StockDetail getDetail() {
+        return detail;
+    }
+
+    /**
+     * @param detail the detail to set
+     */
+    public void setDetail(StockDetail detail) {
+        this.detail = detail;
+    }
+
+    /**
+     * @return the name
+     */
+    public String getName() {
+        return name;
+    }
+
+    /**
+     * @param name the name to set
+     */
+    public void setName(String name) {
+        this.name = name;
+    }
+
     /* (non-Javadoc)
      * @see java.lang.Object#hashCode()
      */
@@ -52,33 +80,5 @@ public class Stock implements Serializable {
         } else if (!quote.equals(other.quote))
             return false;
         return true;
-    }
-
-    /**
-     * @return the detail
-     */
-    public StockDetail getDetail() {
-        return detail;
-    }
-
-    /**
-     * @param detail the detail to set
-     */
-    public void setDetail(StockDetail detail) {
-        this.detail = detail;
-    }
-
-    /**
-     * @return the name
-     */
-    public String getName() {
-        return name;
-    }
-
-    /**
-     * @param name the name to set
-     */
-    public void setName(String name) {
-        this.name = name;
     }
 }
