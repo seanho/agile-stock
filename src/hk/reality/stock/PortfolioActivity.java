@@ -1,7 +1,6 @@
 package hk.reality.stock;
 
 import hk.reality.stock.model.Stock;
-import hk.reality.stock.service.fetcher.QuoteFetcherFactory;
 import hk.reality.stock.service.fetcher.QuoteUpdateTask;
 import hk.reality.stock.service.searcher.StockSearchTask;
 import hk.reality.stock.view.StockAdapter;
@@ -26,6 +25,7 @@ import android.view.View;
 import android.view.Window;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.TextView;
 
 public class PortfolioActivity extends ListActivity {
     private static final String TAG = "PortfolioActivity";
@@ -48,9 +48,13 @@ public class PortfolioActivity extends ListActivity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_PROGRESS);
-
+        setContentView(R.layout.listview);
         adapter = new StockAdapter(this);        
         setListAdapter(adapter);
+        
+        TextView empty = (TextView) findViewById(android.R.id.empty);
+        empty.setText(R.string.msg_add_stock);
+        
         refreshStockList();
     }
 

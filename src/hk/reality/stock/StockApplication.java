@@ -30,7 +30,8 @@ public class StockApplication extends Application {
             Log.i(TAG, "created new portfolio");
             Portfolio p = new Portfolio();
             p.setName(getResources().getString(R.string.new_portfolio_label));
-            p.setStocks(new ArrayList<Stock>());
+            List<Stock> stocks = new ArrayList<Stock>();
+            p.setStocks(stocks);
             portfolioService.create(p);
             currentPortfolio = p;
 

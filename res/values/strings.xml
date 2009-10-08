@@ -2,6 +2,7 @@
 <resources>
     <string name="hello">Hello World, PortfolioActivity!</string>
     <string name="app_name">Agile Stock</string>
+    <string name="msg_add_stock">To add a stock to portfolio, press Menu &gt; Add.</string>
     
     <string name="about_title">About</string>
     <string name="msg_about">Created by siuying (twitter.com/siuying)\n\n<b>Credits</b>\nAgile Stock use following opensource libraries:\n * HtmlCleaner\n * XStream\n * Apache Commons IO\n * Apache Commons Lang</string>
