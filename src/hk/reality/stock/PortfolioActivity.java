@@ -12,9 +12,9 @@ import android.app.Dialog;
 import android.app.ListActivity;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.content.DialogInterface.OnClickListener;
 import android.os.Bundle;
+import android.text.InputType;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -140,6 +140,7 @@ public class PortfolioActivity extends ListActivity {
             return pd;
         case DIALOG_ADD_STOCK:
             final EditText input = new EditText(this);
+            input.setInputType(InputType.TYPE_CLASS_NUMBER);
             input.setId(ID_EDIT_VIEW);
             AlertDialog addDialog = new AlertDialog.Builder(this)
                 .setTitle(R.string.add_stock)
@@ -205,5 +206,16 @@ public class PortfolioActivity extends ListActivity {
                         }
                     })
             .show();
+    }
+
+
+
+    /* (non-Javadoc)
+     * @see android.app.Activity#onResume()
+     */
+    @Override
+    protected void onResume() {
+        super.onResume();
+        updateStocks();
     }
 }

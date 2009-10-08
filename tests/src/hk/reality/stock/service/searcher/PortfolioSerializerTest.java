@@ -2,7 +2,6 @@ package hk.reality.stock.service.searcher;
 
 import hk.reality.stock.model.Portfolio;
 import hk.reality.stock.model.Stock;
-import hk.reality.stock.model.StockDetail;
 import hk.reality.stock.service.PortfolioSerializer;
 
 import java.util.ArrayList;
