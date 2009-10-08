@@ -65,7 +65,7 @@ public class HkexStockSearcher implements StockSearcher {
                 Matcher m = pattern.matcher(value);
                 if (m.find()) {
                     String name = StringUtils.strip(m.group(1));
-                    String quoteNumber = StringUtils.strip(m.group(2));
+                    String quoteNumber = String.format("%05d", Integer.parseInt(StringUtils.strip(m.group(2))));
                     Stock s = new Stock();
                     s.setName(name);
                     s.setQuote(quoteNumber);

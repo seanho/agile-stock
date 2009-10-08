@@ -5,8 +5,6 @@ import hk.reality.stock.model.Stock;
 import hk.reality.stock.model.StockDetail;
 
 import java.io.Reader;
-import java.math.BigDecimal;
-import java.util.Calendar;
 import java.util.List;
 
 import com.thoughtworks.xstream.XStream;

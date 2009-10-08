@@ -22,18 +22,19 @@ public class Money18QuoteFetcher extends BaseQuoteFetcher {
     private static final String DATE_FORMAT = "yyyy/MM/dd HH:mm";
     
     @Override
-    public StockDetail fetch(String quote) {
+    public StockDetail fetch(String quote) throws DownloadException, ParseException {
         StockDetail d = new StockDetail();
+        String content = null;
         try {
             HttpGet openReq = new HttpGet(getOpenUrl(quote));
-            openReq.setHeader("Header", "http://money18.on.cc");
+            openReq.setHeader("Referer", "http://money18.on.cc/");
             HttpResponse resp = getClient().execute(openReq);
-            String content = EntityUtils.toString(resp.getEntity());
+            content = EntityUtils.toString(resp.getEntity());
             JSONObject json = preprocessJson(content);
             double openPrice = json.getDouble("openPrice");
 
             HttpGet req = new HttpGet(getUpdateUrl(quote));
-            req.setHeader("Header", "http://money18.on.cc");
+            req.setHeader("Referer", "http://money18.on.cc/");
             resp = getClient().execute(req);
             content = EntityUtils.toString(resp.getEntity());
             json = preprocessJson(content);
@@ -63,11 +64,12 @@ public class Money18QuoteFetcher extends BaseQuoteFetcher {
         } catch (IOException e) {
             throw new DownloadException("download stock error", e);
         } catch (JSONException e) {
-            throw new ParseException("unexpected return value", e);
+            throw new ParseException("unexpected return value," +
+                    " content = " + content, e);
         } catch (java.text.ParseException e) {
-            throw new ParseException("failed to parse date format", e);
+            throw new ParseException("failed to parse date format," +
+            		" content = " + content, e);
         }
-        return null;
     }
     
     private JSONObject preprocessJson(String content) throws JSONException {
@@ -87,7 +89,7 @@ public class Money18QuoteFetcher extends BaseQuoteFetcher {
     }
     
     private String getUpdateUrl(String quote) {
-        return String.format("http://money18.on.cc/js/real/ote/%s_r.js", quote);
+        return String.format("http://money18.on.cc/js/real/quote/%s_r.js", quote);
     }
 
 }

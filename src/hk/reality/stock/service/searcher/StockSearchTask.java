@@ -69,10 +69,11 @@ public class StockSearchTask extends AsyncTask<String, Void, Stock> {
             } else {
                 stocks.add(result);
                 StockApplication.getPortfolioService().update(portfolio);
-                activity.refreshStock();
+                activity.refreshStockList();
                 Toast.makeText(activity, R.string.msg_stock_added, Toast.LENGTH_LONG).show();
 
-            }            
+            }
+            activity.updateStocks();
         } else {
             switch (error) {
             case ERROR_DOWNLOAD:

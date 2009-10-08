@@ -1,6 +1,7 @@
 package hk.reality.stock;
 
 import hk.reality.stock.model.Stock;
+import hk.reality.stock.service.fetcher.QuoteUpdateTask;
 import hk.reality.stock.service.searcher.StockSearchTask;
 import hk.reality.stock.view.StockAdapter;
 
@@ -18,6 +19,7 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.Window;
 import android.widget.EditText;
 import android.widget.ListView;
 
@@ -28,6 +30,7 @@ public class PortfolioActivity extends ListActivity {
     public static final int DIALOG_ADD_IN_PROGRESS = 101;
     public static final int DIALOG_ERR_DOWNLOAD = 400;
     public static final int DIALOG_ERR_QUOTE = 401;
+    public static final int DIALOG_ERR_QUOTE_UPDATE = 402;
     public static final int ID_EDIT_VIEW = 1200000;
     public static final int MENU_OPEN = 0; 
     public static final int MENU_DEL = 1;
@@ -37,18 +40,27 @@ public class PortfolioActivity extends ListActivity {
     
     @Override
     public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);        
+        super.onCreate(savedInstanceState);
+        requestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS);
         adapter = new StockAdapter(this);        
         setListAdapter(adapter);
-        refreshStock();
+        refreshStockList();
     }
 
-    public void refreshStock() {
+    public void refreshStockList() {
+        Log.d(TAG, "refresh stock list");
         List<Stock> stocks = StockApplication.getCurrentPortfolio().getStocks();
         adapter.clear();
         for(Stock s : stocks) {
             adapter.add(s);
         }
+    }
+    
+    public void updateStocks() {
+        Log.d(TAG, "update stock quote");
+        List<Stock> stocks = StockApplication.getCurrentPortfolio().getStocks();            
+        QuoteUpdateTask task = new QuoteUpdateTask(this);
+        task.execute(stocks.toArray(new Stock[0]));
     }
 
     @Override
@@ -65,6 +77,7 @@ public class PortfolioActivity extends ListActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
         case R.id.refresh:
+            updateStocks();
             return true;
         case R.id.add:
             this.showDialog(DIALOG_ADD_STOCK);
@@ -91,6 +104,13 @@ public class PortfolioActivity extends ListActivity {
                 .setCancelable(true)
                 .create();
             return quoteErrDialog;
+        case DIALOG_ERR_QUOTE_UPDATE:
+            final AlertDialog quoteUpdateErrDialog = new AlertDialog.Builder(this)
+                .setTitle(R.string.msg_error_stock)
+                .setMessage(R.string.msg_error_stock_details)
+                .setCancelable(true)
+                .create();
+            return quoteUpdateErrDialog;
         case DIALOG_ADD_IN_PROGRESS:
             ProgressDialog pd = new ProgressDialog(this);
             pd.setIndeterminate(true);
@@ -155,7 +175,7 @@ public class PortfolioActivity extends ListActivity {
                                 Log.d(TAG, "delete stock ...");
                                 StockApplication.getCurrentPortfolio().getStocks().remove(stock);
                                 StockApplication.getPortfolioService().update(StockApplication.getCurrentPortfolio());
-                                refreshStock();
+                                refreshStockList();
                                 break;
                             default:
                                 throw new IllegalArgumentException(

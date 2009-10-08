@@ -20,6 +20,11 @@
 	<string name="msg_error_download_details">An error occurred while downloading file. Please make sure you have internet connection and try again.</string>
 	<string name="msg_error_unexpected">Stock Not Found</string>
 	<string name="msg_error_unexpected_details">Cannot find stock with input quote. Please make sure you have enter correct number.</string>
+	<string name="msg_error_stock">Unexpected Error</string>
+	<string name="msg_error_stock_details">Cannot parse stock data from source! </string>
+
 	<string name="msg_stock_existed">Stock already existed in portfolio</string>
-	<string name="msg_stock_added">Stock added into portfolio</string>
+	<string name="msg_stock_added">Stock added into portfolio</string>	
+	<string name="msg_download_cancelled">Download cancelled</string>
+
 </resources>
