@@ -8,4 +8,17 @@
 		android:title="@string/add_label" 
 		android:id="@+id/add">
 	</item>
+	
+	<item android:alphabeticShortcut="B"
+		android:title="@string/about_title" 
+		android:id="@+id/about">
+	</item>
+	
+	
+<!--
+	<item android:alphabeticShortcut="S"
+		android:title="@string/setting_label" 
+		android:id="@+id/setting">
+	</item>
+-->
 </menu>

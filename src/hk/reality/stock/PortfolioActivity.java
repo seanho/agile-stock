@@ -12,6 +12,7 @@ import android.app.Dialog;
 import android.app.ListActivity;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.DialogInterface.OnClickListener;
 import android.os.Bundle;
 import android.util.Log;
@@ -28,6 +29,8 @@ public class PortfolioActivity extends ListActivity {
 
     public static final int DIALOG_ADD_STOCK = 100;
     public static final int DIALOG_ADD_IN_PROGRESS = 101;
+    public static final int DIALOG_ABOUT = 102;
+    
     public static final int DIALOG_ERR_DOWNLOAD = 400;
     public static final int DIALOG_ERR_QUOTE = 401;
     public static final int DIALOG_ERR_QUOTE_UPDATE = 402;
@@ -41,7 +44,8 @@ public class PortfolioActivity extends ListActivity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        requestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS);
+        requestWindowFeature(Window.FEATURE_PROGRESS);
+
         adapter = new StockAdapter(this);        
         setListAdapter(adapter);
         refreshStockList();
@@ -69,18 +73,22 @@ public class PortfolioActivity extends ListActivity {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.menu, menu);
         menu.getItem(0).setIcon(R.drawable.ic_menu_rotate);
-        menu.getItem(1).setIcon(R.drawable.ic_menu_add);        
+        menu.getItem(1).setIcon(R.drawable.ic_menu_add);
+        menu.getItem(2).setIcon(R.drawable.ic_menu_help);
         return true;
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
+        case R.id.about:
+            showDialog(DIALOG_ABOUT);
+            return true;
         case R.id.refresh:
             updateStocks();
             return true;
         case R.id.add:
-            this.showDialog(DIALOG_ADD_STOCK);
+            showDialog(DIALOG_ADD_STOCK);
             return true;
         default:
         }
@@ -104,6 +112,19 @@ public class PortfolioActivity extends ListActivity {
                 .setCancelable(true)
                 .create();
             return quoteErrDialog;
+        case DIALOG_ABOUT:
+            AlertDialog aboutDialog = new AlertDialog.Builder(this)
+                .setTitle(R.string.about_title)
+                .setMessage(R.string.msg_about)
+                .setPositiveButton(R.string.ok_label, new OnClickListener(){
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                })
+                .setCancelable(true)
+                .create();
+            return aboutDialog;
         case DIALOG_ERR_QUOTE_UPDATE:
             final AlertDialog quoteUpdateErrDialog = new AlertDialog.Builder(this)
                 .setTitle(R.string.msg_error_stock)

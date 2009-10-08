@@ -12,7 +12,8 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-    </application>
+    <activity android:name=".SettingsActivity"></activity>
+</application>
    	<instrumentation android:name="android.test.InstrumentationTestRunner"
 		android:targetPackage="hk.reality.stock" android:label="Stock" />
     <uses-sdk android:minSdkVersion="3" />

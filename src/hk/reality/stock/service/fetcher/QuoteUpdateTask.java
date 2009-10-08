@@ -34,7 +34,7 @@ public class QuoteUpdateTask extends AsyncTask<Stock, Integer, Boolean> {
             for(Stock s : stocks) {
                 StockDetail detail = fetcher.fetch(s.getQuote());
                 s.setDetail(detail);
-                onProgressUpdate(++current);
+                publishProgress(++current);
             }
 
             StockApplication.getPortfolioService().update(StockApplication.getCurrentPortfolio());
@@ -84,6 +84,7 @@ public class QuoteUpdateTask extends AsyncTask<Stock, Integer, Boolean> {
     @Override
     protected void onProgressUpdate(Integer... values) {
         float progress = ((float) values[0] / (float) total) * 10000;
+        Log.i(TAG, "downloaded " + values[0] + "/" + total + ", " + progress);
         activity.setProgress((int) progress);
     }
 }

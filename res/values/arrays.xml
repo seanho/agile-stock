@@ -1,7 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-  <array name="stock_action">
-  	<item>@string/action_open</item>
-    <item>@string/action_delete</item>
-  </array>
+	<array name="stock_action">
+		<item>@string/action_open</item>
+		<item>@string/action_delete</item>
+	</array>
+	
+	<string-array name="refresh_timer_label">
+		<item>@string/time_1m</item>
+		<item>@string/time_5m</item>
+		<item>@string/time_15m</item>
+	</string-array>
+	
+	<array name="refresh_timer_value">
+		<item>60000</item>
+		<item>300000</item>
+		<item>900000</item>
+	</array>
 </resources>

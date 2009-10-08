@@ -3,11 +3,14 @@
     <string name="hello">Hello World, PortfolioActivity!</string>
     <string name="app_name">Agile Stock</string>
     
+    <string name="about_title">About</string>
+    <string name="msg_about">Created by siuying (twitter.com/siuying)\n\n<b>Credits</b>\nAgile Stock use following opensource libraries:\n * HtmlCleaner\n * XStream\n * Apache Commons IO\n * Apache Commons Lang</string>
     <string name="ok_label">OK</string>
     <string name="cancel_label">Cancel</string>
     
     <string name="refresh_label">Refresh</string>
     <string name="add_label">Add</string>
+    <string name="setting_label">Setting</string>
     <string name="new_portfolio_label">My Portfolio</string>
     
     <string name="action_open">More Detail ...</string>
@@ -22,9 +25,14 @@
 	<string name="msg_error_unexpected_details">Cannot find stock with input quote. Please make sure you have enter correct number.</string>
 	<string name="msg_error_stock">Unexpected Error</string>
 	<string name="msg_error_stock_details">Cannot parse stock data from source! </string>
-
 	<string name="msg_stock_existed">Stock already existed in portfolio</string>
 	<string name="msg_stock_added">Stock added into portfolio</string>	
 	<string name="msg_download_cancelled">Download cancelled</string>
 
+	<string name="setting_auto_refresh">Auto Refresh</string>
+	<string name="time_1m">1 minutes</string>
+	<string name="time_5m">5 minutes</string>
+	<string name="time_15m">15 minutes</string>
+	<string name="setting_auto_refresh_time">Update Interval</string>
+	<string name="setting_auto_refresh_time_summary">Longer values save your battery.</string>
 </resources>

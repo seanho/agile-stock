@@ -1,0 +1,14 @@
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+	<CheckBoxPreference android:key="autoRefresh"
+		android:title="@string/setting_auto_refresh" android:defaultValue="false" />
+
+<!-- 
+	<ListPreference android:key="autoRefreshTime"
+		android:title="@string/setting_auto_refresh_time"
+		android:summary="@string/setting_auto_refresh_time_summary"
+		android:entries="@array/foo_periods"
+		android:entryValues="@array/foo_periods_secs"
+		android:dialogTitle="@string/setting_auto_refresh_time" />
+		-->
+
+</PreferenceScreen>
