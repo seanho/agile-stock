@@ -1,6 +1,7 @@
 package hk.reality.stock;
 
 import hk.reality.stock.model.Stock;
+import hk.reality.stock.service.fetcher.QuoteFetcherFactory;
 import hk.reality.stock.service.fetcher.QuoteUpdateTask;
 import hk.reality.stock.service.searcher.StockSearchTask;
 import hk.reality.stock.view.StockAdapter;
@@ -12,7 +13,9 @@ import android.app.Dialog;
 import android.app.ListActivity;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.DialogInterface.OnClickListener;
+import android.net.Uri;
 import android.os.Bundle;
 import android.text.InputType;
 import android.util.Log;
@@ -193,6 +196,9 @@ public class PortfolioActivity extends ListActivity {
                             switch (i) {
                             case MENU_OPEN:
                                 Log.d(TAG, "open url ...");
+                                Uri uri = Uri.parse(stock.getDetail().getSourceUrl()); 
+                                Intent intent = new Intent(Intent.ACTION_VIEW, uri); 
+                                startActivity(intent);
                                 break;
                             case MENU_DEL:
                                 Log.d(TAG, "delete stock ...");
