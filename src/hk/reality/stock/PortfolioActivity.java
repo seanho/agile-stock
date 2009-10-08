@@ -58,6 +58,7 @@ public class PortfolioActivity extends ListActivity {
         for(Stock s : stocks) {
             adapter.add(s);
         }
+        adapter.sort(new StockAdapter.StockQuoteSorter());
     }
     
     public void updateStocks() {

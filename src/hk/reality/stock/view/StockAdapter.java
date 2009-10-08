@@ -3,6 +3,11 @@ package hk.reality.stock.view;
 import hk.reality.stock.R;
 import hk.reality.stock.model.Stock;
 import hk.reality.stock.model.StockDetail;
+
+import java.util.Comparator;
+
+import org.apache.commons.lang.StringUtils;
+
 import android.content.Context;
 import android.graphics.Color;
 import android.text.format.DateFormat;
@@ -65,5 +70,19 @@ public class StockAdapter extends ArrayAdapter<Stock> {
             change.setText("---- (---)");
         }        
         return v;
+    }
+
+    public static class StockQuoteSorter implements Comparator<Stock> {
+        @Override
+        public int compare(Stock s1, Stock s2) {
+            String q1 = s1.getQuote();
+            String q2 = s2.getQuote();
+            if (StringUtils.isNotEmpty(q1) && StringUtils.isNotEmpty(q2)) {
+                return Integer.parseInt(q1) - Integer.parseInt(q2);
+            } else {
+                return 0;
+            }
+        }
+        
     }
 }
