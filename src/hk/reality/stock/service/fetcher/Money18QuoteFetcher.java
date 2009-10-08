@@ -41,7 +41,7 @@ public class Money18QuoteFetcher extends BaseQuoteFetcher {
             
             double price = json.getDouble("np");
             double change = openPrice - price;
-            double changePercent = (openPrice - price) / openPrice;
+            double changePercent = (openPrice - price) * 100.0 / openPrice;
             
             d.setPrice(new BigDecimal(json.getString("np")));
             d.setChangePrice(new BigDecimal("" + change));
