@@ -18,8 +18,12 @@ import org.apache.http.util.EntityUtils;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import android.util.Log;
+
 public class Money18QuoteFetcher extends BaseQuoteFetcher {
+    private static final String TAG = "Money18QuoteFetcher";
     private static final String DATE_FORMAT = "yyyy/MM/dd HH:mm";
+    private static final String DATE_PARAM_FORMAT = "yyyyMMdd";
     
     @Override
     public StockDetail fetch(String quote) throws DownloadException, ParseException {
@@ -31,7 +35,7 @@ public class Money18QuoteFetcher extends BaseQuoteFetcher {
             HttpResponse resp = getClient().execute(openReq);
             content = EntityUtils.toString(resp.getEntity());
             JSONObject json = preprocessJson(content);
-            double openPrice = json.getDouble("openPrice");
+            double preClosePrice = json.getDouble("preCPrice");
 
             HttpGet req = new HttpGet(getUpdateUrl(quote));
             req.setHeader("Referer", "http://money18.on.cc/");
@@ -40,12 +44,14 @@ public class Money18QuoteFetcher extends BaseQuoteFetcher {
             json = preprocessJson(content);
             
             double price = json.getDouble("np");
-            double change = openPrice - price;
-            double changePercent = (openPrice - price) * 100.0 / openPrice;
+            double change = price - preClosePrice;
+            double changePercent = (price - preClosePrice) * 100.0 / preClosePrice;
             
+            Log.i(TAG, "change and change percent: " + change + ", " + changePercent + 
+                    ". preClose: " + preClosePrice + ", price =" + price);
             d.setPrice(new BigDecimal(json.getString("np")));
-            d.setChangePrice(new BigDecimal("" + change));
-            d.setChangePricePercent(new BigDecimal("" + changePercent));
+            d.setChangePrice(new BigDecimal(rounded(change)));
+            d.setChangePricePercent(new BigDecimal(rounded(changePercent)));
             d.setDayHigh(new BigDecimal(json.getString("dyh")));
             d.setDayLow(new BigDecimal(json.getString("dyl")));
             d.setQuote(quote);
@@ -72,6 +78,10 @@ public class Money18QuoteFetcher extends BaseQuoteFetcher {
         }
     }
     
+    private String rounded(double value) {
+        return String.format("%.3f", (Math.round(value * 1000.0) / 1000.0));
+    }
+    
     private JSONObject preprocessJson(String content) throws JSONException {
         int pos = content.indexOf('{');
         String result = StringUtils.substring(content, pos);
@@ -85,7 +95,10 @@ public class Money18QuoteFetcher extends BaseQuoteFetcher {
     }
     
     private String getOpenUrl(String quote) {
-        return String.format("http://money18.on.cc/js/real/opening/%s_o.js", quote);
+        SimpleDateFormat formatter = new SimpleDateFormat(DATE_PARAM_FORMAT);
+        Calendar cal = Calendar.getInstance();
+        return String.format("http://money18.on.cc/js/daily/quote/%s_d.js?t=%s", 
+                quote, formatter.format(cal.getTime()));
     }
     
     private String getUpdateUrl(String quote) {

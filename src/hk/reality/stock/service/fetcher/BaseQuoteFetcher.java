@@ -4,7 +4,9 @@ import hk.reality.stock.Constants;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.http.client.HttpClient;
+import org.apache.http.conn.ClientConnectionManager;
 import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.impl.conn.tsccm.ThreadSafeClientConnManager;
 import org.apache.http.params.BasicHttpParams;
 import org.apache.http.params.HttpConnectionParams;
 import org.apache.http.params.HttpParams;
@@ -19,6 +21,7 @@ public abstract class BaseQuoteFetcher implements QuoteFetcher {
     private HtmlCleaner cleaner;
     
     public BaseQuoteFetcher() {
+        
         HttpParams params = new BasicHttpParams();
         HttpConnectionParams.setConnectionTimeout(params, 30 * 1000);
         HttpConnectionParams.setSoTimeout(params, 30 * 1000);

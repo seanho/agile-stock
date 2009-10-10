@@ -48,8 +48,10 @@ public class StockAdapter extends ArrayAdapter<Stock> {
             volume.setText(detail.getVolume());
             name.setText(stock.getName());
             quote.setText(detail.getQuote());
-            price.setText(String.format("%.03f", detail.getPrice()));
-            change.setText(String.format("%+.03f (%.03f%%)", detail.getChangePrice(), detail.getChangePricePercent()));
+            price.setText(String.format("%.03f", detail.getPrice().doubleValue()));
+            change.setText(String.format("%+.03f (%.03f%%)", 
+                    detail.getChangePrice().doubleValue(), 
+                    detail.getChangePricePercent().doubleValue()));
             
             if (detail.getChangePrice().floatValue() > 0) {
                 price.setTextColor(Color.rgb(0, 213, 65));

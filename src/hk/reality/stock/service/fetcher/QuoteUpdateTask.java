@@ -29,7 +29,8 @@ public class QuoteUpdateTask extends AsyncTask<Stock, Integer, Boolean> {
     protected Boolean doInBackground(Stock... stocks) {
         total = stocks.length;
         QuoteFetcher fetcher = QuoteFetcherFactory.getQuoteFetcher();
-        
+        fetcher.getClient().getConnectionManager().closeExpiredConnections(); // close previously opened conn
+
         try {
             for(Stock s : stocks) {
                 StockDetail detail = fetcher.fetch(s.getQuote());
