@@ -110,7 +110,7 @@ public class PortfolioActivity extends ListActivity {
             AlertDialog downloadErrDialog = new AlertDialog.Builder(this)
                 .setTitle(R.string.msg_error_download)
                 .setMessage(R.string.msg_error_download_details)
-                .setNegativeButton(R.string.cancel_label, new OnClickListener(){
+                .setPositiveButton(R.string.ok_label, new OnClickListener(){
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         dialog.dismiss();
@@ -123,7 +123,7 @@ public class PortfolioActivity extends ListActivity {
             final AlertDialog quoteErrDialog = new AlertDialog.Builder(this)
                 .setTitle(R.string.msg_error_unexpected)
                 .setMessage(R.string.msg_error_unexpected_details)
-                .setNegativeButton(R.string.cancel_label, new OnClickListener(){
+                .setPositiveButton(R.string.ok_label, new OnClickListener(){
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         dialog.dismiss();
@@ -148,7 +148,7 @@ public class PortfolioActivity extends ListActivity {
         case DIALOG_ERR_QUOTE_UPDATE:
             final AlertDialog quoteUpdateErrDialog = new AlertDialog.Builder(this)
                 .setTitle(R.string.msg_error_stock)
-                .setNegativeButton(R.string.cancel_label, new OnClickListener(){
+                .setPositiveButton(R.string.ok_label, new OnClickListener(){
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         dialog.dismiss();
