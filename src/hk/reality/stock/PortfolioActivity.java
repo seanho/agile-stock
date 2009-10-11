@@ -18,11 +18,14 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.text.InputType;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
+import android.view.View.OnFocusChangeListener;
+import android.view.View.OnKeyListener;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -201,9 +204,8 @@ public class PortfolioActivity extends ListActivity {
             return pd;
         case DIALOG_ADD_STOCK:
             final EditText input = new EditText(this);
-            input.setInputType(InputType.TYPE_CLASS_NUMBER);
-            input.setId(ID_EDIT_VIEW);
-            AlertDialog addDialog = new AlertDialog.Builder(this)
+            
+            final AlertDialog addDialog = new AlertDialog.Builder(this)
                 .setTitle(R.string.add_stock)
                 .setMessage(R.string.add_stock_detail)
                 .setCancelable(true)
@@ -222,6 +224,26 @@ public class PortfolioActivity extends ListActivity {
                 })
                 .setView(input)
                 .create();
+
+            input.setInputType(InputType.TYPE_CLASS_NUMBER);
+            input.setId(ID_EDIT_VIEW);
+            input.setSingleLine();                
+            input.setOnKeyListener(new OnKeyListener(){
+                @Override
+                public boolean onKey(View v, int keyCode, KeyEvent event) {
+                    if (keyCode == KeyEvent.KEYCODE_ENTER) {
+                        String value = input.getText().toString();
+                        Log.d(TAG, "entered quote: " + value);
+                        searchTask = new StockSearchTask(PortfolioActivity.this);
+                        searchTask.execute("CHI", value);
+                        addDialog.dismiss();
+                        return true;
+                    } else {
+                        return false;
+                    }
+                }
+            });
+
             return addDialog;
         default:
         }
