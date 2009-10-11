@@ -33,10 +33,13 @@ public class PortfolioActivity extends ListActivity {
     public static final int DIALOG_ADD_STOCK = 100;
     public static final int DIALOG_ADD_IN_PROGRESS = 101;
     public static final int DIALOG_ABOUT = 102;
+    public static final int DIALOG_DISCLAIMER = 103;
     
     public static final int DIALOG_ERR_DOWNLOAD = 400;
     public static final int DIALOG_ERR_QUOTE = 401;
     public static final int DIALOG_ERR_QUOTE_UPDATE = 402;
+    public static final int DIALOG_ERR_UNEXPECTED = 403;
+
     public static final int ID_EDIT_VIEW = 1200000;
     public static final int MENU_OPEN = 0; 
     public static final int MENU_DEL = 1;
@@ -56,6 +59,10 @@ public class PortfolioActivity extends ListActivity {
         empty.setText(R.string.msg_add_stock);
         
         refreshStockList();
+        
+        if (!SettingsActivity.getDisclaimerShown(this)) {
+            showDialog(DIALOG_DISCLAIMER);
+        }
     }
 
     public void refreshStockList() {
@@ -106,6 +113,34 @@ public class PortfolioActivity extends ListActivity {
     @Override
     protected Dialog onCreateDialog(int id) {
         switch (id) {
+        case DIALOG_DISCLAIMER:
+            AlertDialog disclaimerDialog = new AlertDialog.Builder(this)
+            .setTitle(R.string.disclaimer_label)
+            .setMessage(R.string.msg_disclaimer)
+            .setPositiveButton(R.string.ok_label, new OnClickListener(){
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    SettingsActivity.setDisclaimerShown(PortfolioActivity.this, true);
+                    dialog.dismiss();
+                    
+                }                    
+            })
+            .setCancelable(true)
+            .create();
+            return disclaimerDialog;
+        case DIALOG_ERR_UNEXPECTED:
+            AlertDialog unexpectedErrDialog = new AlertDialog.Builder(this)
+                .setTitle(R.string.msg_error_unexpect)
+                .setMessage(R.string.msg_error_unexpect_details)
+                .setPositiveButton(R.string.ok_label, new OnClickListener(){
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }                    
+                })
+                .setCancelable(true)
+                .create();
+            return unexpectedErrDialog;
         case DIALOG_ERR_DOWNLOAD:
             AlertDialog downloadErrDialog = new AlertDialog.Builder(this)
                 .setTitle(R.string.msg_error_download)
@@ -246,5 +281,12 @@ public class PortfolioActivity extends ListActivity {
     protected void onResume() {
         super.onResume();
         updateStocks();
+    }
+
+    /**
+     * @return the adapter
+     */
+    public StockAdapter getAdapter() {
+        return adapter;
     }
 }

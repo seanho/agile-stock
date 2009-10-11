@@ -8,6 +8,7 @@ import hk.reality.stock.model.Stock;
 import hk.reality.stock.service.Lang;
 import hk.reality.stock.service.exception.DownloadException;
 import hk.reality.stock.service.exception.ParseException;
+import hk.reality.utils.NetworkDetector;
 
 import java.util.List;
 
@@ -22,7 +23,7 @@ public class StockSearchTask extends AsyncTask<String, Void, Stock> {
     private Error error;
     private PortfolioActivity activity;
     enum Error {
-        ERROR_DOWNLOAD, ERROR_PARSE
+        ERROR_NO_NET, ERROR_DOWNLOAD, ERROR_PARSE, ERROR_UNKNOWN
     }
     
     public StockSearchTask(PortfolioActivity activity) {
@@ -38,6 +39,11 @@ public class StockSearchTask extends AsyncTask<String, Void, Stock> {
         String lang = params[0];
         String quote = params[1];
         
+        if (!NetworkDetector.hasValidNetwork(activity)) {
+            error = Error.ERROR_NO_NET;
+            return null;
+        }
+        
         try {
             StockSearcher searcher = new HkexStockSearcher(Lang.valueOf(lang));
             return searcher.searchStock(quote);
@@ -47,6 +53,9 @@ public class StockSearchTask extends AsyncTask<String, Void, Stock> {
         } catch (ParseException pe) {
             Log.e(TAG, "error parsing stock info", pe);
             error = Error.ERROR_PARSE;
+        } catch (RuntimeException ue) {
+            Log.e(TAG, "error parsing stock info", ue);
+            error = Error.ERROR_UNKNOWN;
         }
         return null;
     }
@@ -76,11 +85,17 @@ public class StockSearchTask extends AsyncTask<String, Void, Stock> {
             activity.updateStocks();
         } else {
             switch (error) {
+            case ERROR_NO_NET:
+                Toast.makeText(activity, R.string.msg_no_network, Toast.LENGTH_LONG).show();
+                break;
             case ERROR_DOWNLOAD:
                 activity.showDialog(PortfolioActivity.DIALOG_ERR_DOWNLOAD);
                 break;
             case ERROR_PARSE:
                 activity.showDialog(PortfolioActivity.DIALOG_ERR_QUOTE);
+                break;
+            case ERROR_UNKNOWN:
+                activity.showDialog(PortfolioActivity.DIALOG_ERR_UNEXPECTED);
                 break;
             default:
                 break;

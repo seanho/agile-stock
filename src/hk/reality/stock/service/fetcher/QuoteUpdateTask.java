@@ -7,6 +7,7 @@ import hk.reality.stock.model.Stock;
 import hk.reality.stock.model.StockDetail;
 import hk.reality.stock.service.exception.DownloadException;
 import hk.reality.stock.service.exception.ParseException;
+import hk.reality.utils.NetworkDetector;
 import android.os.AsyncTask;
 import android.util.Log;
 import android.widget.Toast;
@@ -18,7 +19,7 @@ public class QuoteUpdateTask extends AsyncTask<Stock, Integer, Boolean> {
     private int current = 0;
     private Error error;
     enum Error {
-        ERROR_DOWNLOAD, ERROR_PARSE
+        ERROR_NO_NET, ERROR_DOWNLOAD, ERROR_PARSE, ERROR_UNKNOWN
     }
     
     public QuoteUpdateTask(PortfolioActivity activity) {
@@ -26,7 +27,12 @@ public class QuoteUpdateTask extends AsyncTask<Stock, Integer, Boolean> {
     }
 
     @Override
-    protected Boolean doInBackground(Stock... stocks) {
+    protected Boolean doInBackground(Stock... stocks) {        
+        if (!NetworkDetector.hasValidNetwork(activity)) {
+            error = Error.ERROR_NO_NET;
+            return Boolean.FALSE;
+        }
+        
         total = stocks.length;
         QuoteFetcher fetcher = QuoteFetcherFactory.getQuoteFetcher();
         fetcher.getClient().getConnectionManager().closeExpiredConnections(); // close previously opened conn
@@ -48,6 +54,10 @@ public class QuoteUpdateTask extends AsyncTask<Stock, Integer, Boolean> {
             Log.e(TAG, "error parsing code", pe);
             error = Error.ERROR_PARSE;
             return Boolean.FALSE;
+        } catch (RuntimeException re) {
+            Log.e(TAG, "unexpected error while update stock quote", re);
+            error = Error.ERROR_UNKNOWN;
+            return Boolean.FALSE;
         }
     }
 
@@ -64,11 +74,17 @@ public class QuoteUpdateTask extends AsyncTask<Stock, Integer, Boolean> {
             activity.refreshStockList();
         } else {
             switch (error) {
+            case ERROR_NO_NET:
+                Toast.makeText(activity, R.string.msg_no_network, Toast.LENGTH_LONG).show();
+                break;
             case ERROR_DOWNLOAD:
                 activity.showDialog(PortfolioActivity.DIALOG_ERR_DOWNLOAD);
                 break;
             case ERROR_PARSE:
                 activity.showDialog(PortfolioActivity.DIALOG_ERR_QUOTE_UPDATE);
+                break;
+            case ERROR_UNKNOWN:
+                activity.showDialog(PortfolioActivity.DIALOG_ERR_UNEXPECTED);
                 break;
             default:
                 break;
@@ -87,5 +103,6 @@ public class QuoteUpdateTask extends AsyncTask<Stock, Integer, Boolean> {
         float progress = ((float) values[0] / (float) total) * 10000;
         Log.i(TAG, "downloaded " + values[0] + "/" + total + ", " + progress);
         activity.setProgress((int) progress);
+        activity.getAdapter().notifyDataSetChanged();
     }
 }
