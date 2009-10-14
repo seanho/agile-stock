@@ -5,6 +5,9 @@ import hk.reality.stock.Constants;
 import org.apache.commons.lang.StringUtils;
 import org.apache.http.client.HttpClient;
 import org.apache.http.conn.ClientConnectionManager;
+import org.apache.http.conn.scheme.PlainSocketFactory;
+import org.apache.http.conn.scheme.Scheme;
+import org.apache.http.conn.scheme.SchemeRegistry;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.impl.conn.tsccm.ThreadSafeClientConnManager;
 import org.apache.http.params.BasicHttpParams;
@@ -19,14 +22,19 @@ import org.htmlcleaner.XPatherException;
 public abstract class BaseQuoteFetcher implements QuoteFetcher {
     private HttpClient client;
     private HtmlCleaner cleaner;
+    private static final int TIMEOUT = 10;
     
     public BaseQuoteFetcher() {
         
         HttpParams params = new BasicHttpParams();
-        HttpConnectionParams.setConnectionTimeout(params, 30 * 1000);
-        HttpConnectionParams.setSoTimeout(params, 30 * 1000);
+        HttpConnectionParams.setConnectionTimeout(params, TIMEOUT * 1000);
+        HttpConnectionParams.setSoTimeout(params, TIMEOUT * 1000);
         HttpProtocolParams.setUserAgent(params, Constants.USER_AGENT);
-        this.client = new DefaultHttpClient(params);
+        
+        SchemeRegistry schemeRegistry = new SchemeRegistry();
+        schemeRegistry.register(new Scheme("http", PlainSocketFactory.getSocketFactory(), 80));
+        ClientConnectionManager cm = new ThreadSafeClientConnManager(params, schemeRegistry);
+        this.client = new DefaultHttpClient(cm, params);
 
         this.cleaner = new HtmlCleaner();
         CleanerProperties prop = cleaner.getProperties();

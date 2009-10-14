@@ -8,6 +8,14 @@ import hk.reality.stock.model.StockDetail;
 import hk.reality.stock.service.exception.DownloadException;
 import hk.reality.stock.service.exception.ParseException;
 import hk.reality.utils.NetworkDetector;
+
+import java.util.ArrayList;
+import java.util.concurrent.Callable;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Future;
+import java.util.concurrent.TimeUnit;
+
 import android.os.AsyncTask;
 import android.util.Log;
 import android.widget.Toast;
@@ -36,14 +44,30 @@ public class QuoteUpdateTask extends AsyncTask<Stock, Integer, Boolean> {
         total = stocks.length;
         QuoteFetcher fetcher = QuoteFetcherFactory.getQuoteFetcher();
         fetcher.getClient().getConnectionManager().closeExpiredConnections(); // close previously opened conn
+        fetcher.getClient().getConnectionManager().closeIdleConnections(30, TimeUnit.SECONDS);
 
+        ExecutorService executor = StockApplication.getExecutor();
         try {
+            ArrayList<Future<StockDetail>> results = new ArrayList<Future<StockDetail>>();
             for(Stock s : stocks) {
-                StockDetail detail = fetcher.fetch(s.getQuote());
-                s.setDetail(detail);
-                publishProgress(++current);
+                UpdateSubTask task = new UpdateSubTask(fetcher, s);
+                results.add(executor.submit(task));
             }
-
+            
+            for(Future<StockDetail> r : results) {
+                try {
+                    r.get();
+                } catch (ExecutionException e) {
+                    Throwable t = e.getCause();
+                    if (t instanceof RuntimeException) {
+                        throw (RuntimeException) t;
+                    } else {
+                        Log.e(TAG, "unexpected error while update stock quote", t);
+                        error = Error.ERROR_UNKNOWN;
+                        return Boolean.FALSE;
+                    }
+                }
+            }
             StockApplication.getPortfolioService().update(StockApplication.getCurrentPortfolio());
             return Boolean.TRUE;
         } catch (DownloadException de) {
@@ -54,10 +78,32 @@ public class QuoteUpdateTask extends AsyncTask<Stock, Integer, Boolean> {
             Log.e(TAG, "error parsing code", pe);
             error = Error.ERROR_PARSE;
             return Boolean.FALSE;
+        } catch (InterruptedException e) {
+            Log.e(TAG, "download timeout", e);
+            error = Error.ERROR_DOWNLOAD;
+            return Boolean.FALSE;
         } catch (RuntimeException re) {
             Log.e(TAG, "unexpected error while update stock quote", re);
             error = Error.ERROR_UNKNOWN;
             return Boolean.FALSE;
+        } 
+    }
+
+    class UpdateSubTask implements Callable<StockDetail> {
+        Stock stock;
+        QuoteFetcher fetcher;
+
+        public UpdateSubTask(QuoteFetcher fetcher, Stock s) {
+            this.fetcher = fetcher;
+            this.stock = s;
+        }
+
+        @Override
+        public StockDetail call() throws Exception {
+            StockDetail detail = fetcher.fetch(stock.getQuote());
+            stock.setDetail(detail);
+            publishProgress(++current);
+            return detail;
         }
     }
 

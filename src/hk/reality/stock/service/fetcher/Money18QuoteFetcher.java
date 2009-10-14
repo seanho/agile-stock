@@ -29,8 +29,8 @@ public class Money18QuoteFetcher extends BaseQuoteFetcher {
     public StockDetail fetch(String quote) throws DownloadException, ParseException {
         StockDetail d = new StockDetail();
         String content = null;
-        try {
-            HttpGet openReq = new HttpGet(getOpenUrl(quote));
+        HttpGet openReq = new HttpGet(getOpenUrl(quote));
+        try {            
             openReq.setHeader("Referer", "http://money18.on.cc/");
             HttpResponse resp = getClient().execute(openReq);
             content = EntityUtils.toString(resp.getEntity());
@@ -66,13 +66,17 @@ public class Money18QuoteFetcher extends BaseQuoteFetcher {
             
             return d;
         } catch (ClientProtocolException e) {
+            openReq.abort();
             throw new DownloadException("protocol exception", e);
         } catch (IOException e) {
+            openReq.abort();
             throw new DownloadException("download stock error", e);
         } catch (JSONException e) {
+            openReq.abort();
             throw new ParseException("unexpected return value," +
                     " content = " + content, e);
         } catch (java.text.ParseException e) {
+            openReq.abort();
             throw new ParseException("failed to parse date format," +
             		" content = " + content, e);
         }

@@ -7,6 +7,8 @@ import hk.reality.stock.service.PortfolioService;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 import android.app.Application;
 import android.util.Log;
@@ -15,11 +17,14 @@ public class StockApplication extends Application {
     private static final String TAG = "StockApplication";
     private static PortfolioService portfolioService;
     private static Portfolio currentPortfolio;
+    private static ExecutorService executor; 
     
     @Override
     public void onCreate() {
         super.onCreate();
+
         portfolioService = new FilePortfolioService(this.getFilesDir());
+        executor = Executors.newFixedThreadPool(SettingsActivity.getConcurrent(this));
 
         List<Portfolio> allPortfolios = portfolioService.list();
         if (allPortfolios.size() > 0) {
@@ -53,5 +58,12 @@ public class StockApplication extends Application {
 
     public static void setCurrentPortfolio(Portfolio currentPortfolio) {
         StockApplication.currentPortfolio = currentPortfolio;
+    }
+
+    /**
+     * @return the executor
+     */
+    public static ExecutorService getExecutor() {
+        return executor;
     }
 }
