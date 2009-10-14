@@ -50,8 +50,8 @@ public class Money18QuoteFetcher extends BaseQuoteFetcher {
             Log.i(TAG, "change and change percent: " + change + ", " + changePercent + 
                     ". preClose: " + preClosePrice + ", price =" + price);
             d.setPrice(new BigDecimal(json.getString("np")));
-            d.setChangePrice(new BigDecimal(rounded(change)));
-            d.setChangePricePercent(new BigDecimal(rounded(changePercent)));
+            d.setChangePrice(new BigDecimal(rounded(change, 1000.0)));
+            d.setChangePricePercent(new BigDecimal(rounded(changePercent, 100.0)));
             d.setDayHigh(new BigDecimal(json.getString("dyh")));
             d.setDayLow(new BigDecimal(json.getString("dyl")));
             d.setQuote(quote);
@@ -78,8 +78,8 @@ public class Money18QuoteFetcher extends BaseQuoteFetcher {
         }
     }
     
-    private String rounded(double value) {
-        return String.format("%.3f", (Math.round(value * 1000.0) / 1000.0));
+    private String rounded(double value, double ratio) {
+        return String.format("%.3f", (Math.round(value * ratio) / ratio));
     }
     
     private JSONObject preprocessJson(String content) throws JSONException {

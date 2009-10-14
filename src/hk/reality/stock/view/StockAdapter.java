@@ -49,7 +49,7 @@ public class StockAdapter extends ArrayAdapter<Stock> {
             name.setText(stock.getName());
             quote.setText(detail.getQuote());
             price.setText(String.format("%.03f", detail.getPrice().doubleValue()));
-            change.setText(String.format("%+.03f (%.03f%%)", 
+            change.setText(String.format("%+.03f (%.02f%%)", 
                     detail.getChangePrice().doubleValue(), 
                     detail.getChangePricePercent().doubleValue()));
             
