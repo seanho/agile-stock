@@ -31,7 +31,7 @@ public class HkexStockSearcher implements StockSearcher {
     private static final String BEGIN = "#66CCFF\">";
     private static final String END = "</font>";
 
-    private static final String REGEXP = "(.+)\\(([0-9]+){1,5}\\)";
+    private static final String REGEXP = "(.+)\\(([0-9]{1,5})";
     private static final Pattern pattern = Pattern.compile(REGEXP);
     
     private HttpClient client;    
