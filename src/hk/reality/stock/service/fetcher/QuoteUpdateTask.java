@@ -124,7 +124,7 @@ public class QuoteUpdateTask extends AsyncTask<Stock, Integer, Boolean> {
                 Toast.makeText(activity, R.string.msg_no_network, Toast.LENGTH_LONG).show();
                 break;
             case ERROR_DOWNLOAD:
-                activity.showDialog(PortfolioActivity.DIALOG_ERR_DOWNLOAD);
+                activity.showDialog(PortfolioActivity.DIALOG_ERR_DOWNLOAD_UPDATE);
                 break;
             case ERROR_PARSE:
                 activity.showDialog(PortfolioActivity.DIALOG_ERR_QUOTE_UPDATE);

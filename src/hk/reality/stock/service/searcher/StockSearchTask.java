@@ -89,7 +89,7 @@ public class StockSearchTask extends AsyncTask<String, Void, Stock> {
                 Toast.makeText(activity, R.string.msg_no_network, Toast.LENGTH_LONG).show();
                 break;
             case ERROR_DOWNLOAD:
-                activity.showDialog(PortfolioActivity.DIALOG_ERR_DOWNLOAD);
+                activity.showDialog(PortfolioActivity.DIALOG_ERR_DOWNLOAD_PORTFOLIO);
                 break;
             case ERROR_PARSE:
                 activity.showDialog(PortfolioActivity.DIALOG_ERR_QUOTE);
