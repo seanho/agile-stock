@@ -1,5 +1,6 @@
 package hk.reality.stock.service.fetcher;
 
+import static hk.reality.stock.service.fetcher.Utils.*;
 import hk.reality.stock.model.StockDetail;
 import hk.reality.stock.service.exception.DownloadException;
 import hk.reality.stock.service.exception.ParseException;
@@ -10,7 +11,6 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 
-import org.apache.commons.lang.StringUtils;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.methods.HttpGet;
@@ -80,17 +80,6 @@ public class Money18QuoteFetcher extends BaseQuoteFetcher {
             throw new ParseException("failed to parse date format," +
             		" content = " + content, e);
         }
-    }
-    
-    private String rounded(double value, double ratio) {
-        return String.format("%.3f", (Math.round(value * ratio) / ratio));
-    }
-    
-    private JSONObject preprocessJson(String content) throws JSONException {
-        int pos = content.indexOf('{');
-        String result = StringUtils.substring(content, pos);
-        JSONObject json = new JSONObject(result);
-        return json;
     }
 
     @Override

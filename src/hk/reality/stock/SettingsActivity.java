@@ -8,6 +8,7 @@ import android.preference.PreferenceManager;
 public class SettingsActivity extends PreferenceActivity {
     public static final String KEY_DISCLAIMER_SHOWN = "disclaimer.shown";
     public static final String KEY_CONCURRENT = "concurrent.number";
+    public static final String KEY_HTTP_TIMEOUT = "http.timeout";
     
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,5 +34,25 @@ public class SettingsActivity extends PreferenceActivity {
     public static void setConcurrent(Context context, int concurrent) {
         PreferenceManager.getDefaultSharedPreferences(context)
             .edit().putInt(KEY_CONCURRENT, concurrent).commit();
+    }
+    
+    /**
+     * get Http Timeout, in seconds
+     * @param context
+     * @return
+     */
+    public static int getHttpTimeout(Context context) {
+        return PreferenceManager.getDefaultSharedPreferences(context)
+            .getInt(KEY_HTTP_TIMEOUT, 10);
+    }
+    
+    /**
+     * set http timeout, in deconds
+     * @param context
+     * @param timeout
+     */
+    public static void setHttpTimeout(Context context, int timeout) {
+        PreferenceManager.getDefaultSharedPreferences(context)
+            .edit().putInt(KEY_HTTP_TIMEOUT, timeout).commit();
     }
 }
