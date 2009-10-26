@@ -25,7 +25,7 @@ public class Money18IndexesFetcherTest extends TestCase {
         Assert.assertTrue(indexes.size() > 0);
         Assert.assertNotNull(indexes.get(0));
 
-        Log.d(TAG, "index: " + indexes.get(0));
+        Log.i(TAG, "******************* index: " + indexes.get(0));
     }
     
     protected IndexesFetcher getFetcher() {
