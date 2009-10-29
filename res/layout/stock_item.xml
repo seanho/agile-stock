@@ -2,20 +2,19 @@
 	xmlns:android="http://schemas.android.com/apk/res/android"
 	android:orientation="vertical" android:layout_width="fill_parent" android:padding="4sp" android:layout_height="fill_parent" android:background="@drawable/item">
 	<LinearLayout
-		android:layout_height="wrap_content"
-		android:orientation="horizontal" android:layout_width="fill_parent">
+		android:orientation="horizontal" android:layout_width="fill_parent" android:layout_height="wrap_content">
 		<TextView android:id="@+id/name" android:layout_height="wrap_content"
 			android:lines="1" android:shadowRadius="1" android:shadowDx="1" android:shadowDy="1"
-			android:shadowColor="#88444444" android:textSize="22sp" android:textColor="#FFFFFF" android:layout_width="fill_parent" android:layout_weight="1" android:maxLines="1" android:minLines="1" android:marqueeRepeatLimit="marquee_forever" android:text="長江實業長 江實業 長江實業" android:ellipsize="marquee"></TextView>
-		<TextView android:layout_height="wrap_content" android:id="@+id/quote" android:text="00001" android:layout_width="wrap_content" android:paddingRight="5sp" android:paddingLeft="10sp" android:shadowColor="#88444444" android:shadowDx="1" android:shadowDy="1" android:shadowRadius="1" android:textSize="24sp" android:textColor="#FFFFFF"></TextView><TextView android:id="@+id/price" android:layout_height="wrap_content"
-			android:text="94.100" android:gravity="right" android:paddingLeft="5sp" android:textStyle="bold" android:textSize="24sp" android:textColor="@color/normal" android:layout_width="90sp" android:shadowColor="#88444444" android:shadowDx="1" android:shadowDy="1" android:shadowRadius="1"></TextView>
+			android:shadowColor="#88444444" android:textSize="22sp" android:textColor="#FFFFFF" android:maxLines="1" android:minLines="1" android:marqueeRepeatLimit="marquee_forever" android:text="長江實業長 江實業 長江實業" android:ellipsize="marquee" android:layout_width="150sp"></TextView>
+		<TextView android:layout_height="wrap_content" android:id="@+id/quote" android:text="00001" android:paddingRight="5sp" android:paddingLeft="10sp" android:shadowColor="#88444444" android:shadowDx="1" android:shadowDy="1" android:shadowRadius="1" android:textSize="24sp" android:textColor="#FFFFFF" android:layout_width="fill_parent" android:layout_weight="1"></TextView><TextView android:id="@+id/price" android:layout_height="wrap_content"
+			android:text="94.100" android:gravity="right" android:paddingLeft="5sp" android:textStyle="bold" android:textColor="@color/normal" android:shadowColor="#88444444" android:shadowDx="1" android:shadowDy="1" android:shadowRadius="1" android:textSize="24sp" android:layout_weight="1" android:layout_width="fill_parent"></TextView>
 	</LinearLayout>
 	<LinearLayout
 		android:layout_height="wrap_content"
 		android:orientation="horizontal" android:layout_width="fill_parent">
 		
 		
-		<TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="10:10" android:id="@+id/time"></TextView><TextView android:layout_height="wrap_content" android:gravity="right" android:id="@+id/volume" android:text="12345678" android:layout_width="fill_parent" android:layout_weight="1" android:paddingRight="10sp"></TextView><TextView android:layout_height="wrap_content" android:id="@+id/change" android:gravity="right" android:text="+1.5 (+0.02%) " android:layout_width="wrap_content"></TextView>
+		<TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="10:10" android:id="@+id/time"></TextView><TextView android:layout_height="wrap_content" android:gravity="right" android:id="@+id/volume" android:text="12345678" android:layout_width="fill_parent" android:paddingRight="10sp" android:layout_weight="1"></TextView><TextView android:layout_height="wrap_content" android:id="@+id/change" android:gravity="right" android:text="+1.5 (+0.02%) " android:layout_width="wrap_content"></TextView>
 
 	
 </LinearLayout>

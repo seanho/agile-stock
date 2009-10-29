@@ -42,4 +42,7 @@
 	<string name="time_15m">15 minutes</string>
 	<string name="setting_auto_refresh_time">Update Interval</string>
 	<string name="setting_auto_refresh_time_summary">Longer values save your battery.</string>
+	
+	<string name="tab_stock">Stock</string>
+	<string name="tab_index">Index</string>
 </resources>

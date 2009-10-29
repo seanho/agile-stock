@@ -24,7 +24,6 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
-import android.view.View.OnFocusChangeListener;
 import android.view.View.OnKeyListener;
 import android.widget.EditText;
 import android.widget.ListView;

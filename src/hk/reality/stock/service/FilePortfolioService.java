@@ -19,6 +19,8 @@ import org.apache.commons.io.IOUtils;
 
 import android.util.Log;
 
+import com.thoughtworks.xstream.io.StreamException;
+
 public class FilePortfolioService implements PortfolioService {
 	private static final String STORAGE_FILE = "portfolio.xml";
 	private static final String TAG = "FilePortfolioService";
@@ -81,6 +83,10 @@ public class FilePortfolioService implements PortfolioService {
         } catch (IOException e) {
             throw new StorageException("failed storing datafile", e);
         
+        } catch (StreamException se) {
+            Log.w(TAG, "failed to read or write datafile", se);
+            return new Vector<Portfolio>();
+            
         } finally {
             IOUtils.closeQuietly(reader);
         
