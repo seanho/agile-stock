@@ -1,0 +1,1 @@
+<TextView android:id="@+id/TextView01" xmlns:android="http://schemas.android.com/apk/res/android" android:layout_height="fill_parent" android:layout_width="fill_parent" android:text="@string/msg_about" android:padding="4sp" android:autoLink="web"></TextView>

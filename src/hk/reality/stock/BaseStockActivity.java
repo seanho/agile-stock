@@ -3,8 +3,10 @@ package hk.reality.stock;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.ListActivity;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.DialogInterface.OnClickListener;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -29,9 +31,10 @@ public class BaseStockActivity extends ListActivity {
     protected Dialog onCreateDialog(int id) {
         switch (id) {
         case DIALOG_ABOUT:
+            LayoutInflater vi = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             AlertDialog aboutDialog = new AlertDialog.Builder(this)
                 .setTitle(R.string.about_title)
-                .setMessage(R.string.msg_about)
+                .setView(vi.inflate(R.layout.alert, null))
                 .setPositiveButton(R.string.ok_label, new OnClickListener(){
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
@@ -40,6 +43,7 @@ public class BaseStockActivity extends ListActivity {
                 })
                 .setCancelable(true)
                 .create();
+            
             return aboutDialog;
         case DIALOG_ERR_UNEXPECTED:
             AlertDialog unexpectedErrDialog = new AlertDialog.Builder(this)

@@ -8,7 +8,7 @@
     <string name="about_title">About</string>
     <string name="disclaimer_label">Disclaimer</string>
     <string name="msg_disclaimer">The information display in this application are retrieve from third party sources. \n\nWe do not guarantee its accuracy and reliability and accept no liability (whether in tort or contract or otherwise) for any loss or damage arising from any inaccuracy or omission or from any decision, action or non-action based on or in reliance upon information shown.\n\nAny information obtained through the use of the application is done at your own discretion and risk and that you will be solely responsible for any damage to your computer system or other access device or loss of data that results from the use of any service. You agree that you must evaluate, and bear all risks associated with, the use of any service, including any reliance on the accuracy, completeness, or usefulness of such inforamtion.</string>
-    <string name="msg_about">Created by siuying (twitter.com/siuying)\n\nInformation from HKEX (http://www.hkex.com.hk) and Money 18 (http://money18.on.cc). \n\nAgile Stock use following opensource libraries:\n * HtmlCleaner\n * XStream\n * Apache Commons IO\n * Apache Commons Lang</string>
+    <string name="msg_about">Created by siuying (http://twitter.com/siuying)\n\nInformation from HKEX (http://www.hkex.com.hk) and Money 18 (http://money18.on.cc). \n\nAgile Stock use following opensource libraries:\n * HtmlCleaner\n * XStream\n * Apache Commons IO\n * Apache Commons Lang</string>
     <string name="retry_label">Retry</string>
     <string name="ok_label">OK</string>
     <string name="cancel_label">Cancel</string>
