@@ -9,7 +9,6 @@ import java.util.List;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
-import android.app.ListActivity;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -24,24 +23,22 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.Window;
 import android.view.View.OnKeyListener;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
 
-public class PortfolioActivity extends ListActivity {
+public class PortfolioActivity extends BaseStockActivity {
     private static final String TAG = "PortfolioActivity";
 
     public static final int DIALOG_ADD_STOCK = 100;
     public static final int DIALOG_ADD_IN_PROGRESS = 101;
-    public static final int DIALOG_ABOUT = 102;
     public static final int DIALOG_DISCLAIMER = 103;
     
     public static final int DIALOG_ERR_DOWNLOAD_UPDATE = 400;
     public static final int DIALOG_ERR_QUOTE = 401;
     public static final int DIALOG_ERR_QUOTE_UPDATE = 402;
-    public static final int DIALOG_ERR_UNEXPECTED = 403;
+    
     public static final int DIALOG_ERR_DOWNLOAD_PORTFOLIO = 405;
 
     public static final int ID_EDIT_VIEW = 1200000;
@@ -95,9 +92,6 @@ public class PortfolioActivity extends ListActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
-        case R.id.about:
-            showDialog(DIALOG_ABOUT);
-            return true;
         case R.id.refresh:
             updateStocks();
             return true;
@@ -106,7 +100,7 @@ public class PortfolioActivity extends ListActivity {
             return true;
         default:
         }
-        return false;
+        return super.onOptionsItemSelected(item);
     }
 
     @Override
@@ -127,19 +121,6 @@ public class PortfolioActivity extends ListActivity {
             .setCancelable(true)
             .create();
             return disclaimerDialog;
-        case DIALOG_ERR_UNEXPECTED:
-            AlertDialog unexpectedErrDialog = new AlertDialog.Builder(this)
-                .setTitle(R.string.msg_error_unexpect)
-                .setMessage(R.string.msg_error_unexpect_details)
-                .setPositiveButton(R.string.ok_label, new OnClickListener(){
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        dialog.dismiss();
-                    }                    
-                })
-                .setCancelable(true)
-                .create();
-            return unexpectedErrDialog;
         case DIALOG_ERR_DOWNLOAD_UPDATE:
             AlertDialog downloadErrDialog = new AlertDialog.Builder(this)
                 .setTitle(R.string.msg_error_download)
@@ -193,19 +174,6 @@ public class PortfolioActivity extends ListActivity {
                 .setCancelable(true)
                 .create();
             return quoteErrDialog;
-        case DIALOG_ABOUT:
-            AlertDialog aboutDialog = new AlertDialog.Builder(this)
-                .setTitle(R.string.about_title)
-                .setMessage(R.string.msg_about)
-                .setPositiveButton(R.string.ok_label, new OnClickListener(){
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        dialog.dismiss();
-                    }
-                })
-                .setCancelable(true)
-                .create();
-            return aboutDialog;
         case DIALOG_ERR_QUOTE_UPDATE:
             final AlertDialog quoteUpdateErrDialog = new AlertDialog.Builder(this)
                 .setTitle(R.string.msg_error_stock)
@@ -270,7 +238,7 @@ public class PortfolioActivity extends ListActivity {
             return addDialog;
         default:
         }
-        return null;
+        return super.onCreateDialog(id);
     }
     
     @Override

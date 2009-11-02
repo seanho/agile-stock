@@ -1,0 +1,12 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+	<item android:alphabeticShortcut="R"
+		android:title="@string/refresh_label" 
+		android:id="@+id/refresh">
+	</item>
+	
+	<item android:alphabeticShortcut="B"
+		android:title="@string/about_title" 
+		android:id="@+id/about">
+	</item>
+	
+</menu>
