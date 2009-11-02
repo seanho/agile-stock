@@ -8,25 +8,19 @@
 		android:marqueeRepeatLimit="marquee_forever" android:text="長江實業長 江實業 長江實業"
 		android:ellipsize="marquee" android:singleLine="true"
 		android:layout_alignParentLeft="true" android:layout_alignParentTop="true" android:layout_width="160sp"></TextView>
-	<TextView android:layout_height="wrap_content" android:id="@+id/quote"
-		android:text="00001" android:paddingRight="5sp" android:paddingLeft="10sp"
-		android:shadowColor="#88444444" android:shadowDx="1" android:shadowDy="1"
-		android:shadowRadius="1" android:textSize="24sp" android:textColor="#FFFFFF"
-		android:layout_width="80sp" android:lines="1"
-		android:layout_alignParentTop="true" android:layout_toRightOf="@+id/name"></TextView>
+	
 	<TextView android:id="@+id/price" android:layout_height="wrap_content"
 		android:gravity="right" android:paddingLeft="5sp" android:textStyle="bold"
 		android:textColor="@color/normal" android:shadowColor="#88444444"
 		android:shadowDx="1" android:shadowDy="1" android:shadowRadius="1"
-		android:textSize="24sp" android:text="794.100" android:layout_width="80sp"
-		android:lines="1" android:layout_alignParentRight="true"
-		android:layout_alignParentTop="true"></TextView>
+		android:textSize="24sp" android:lines="1" android:layout_alignParentRight="true"
+		android:layout_alignParentTop="true" android:layout_width="120sp" android:text="22794.10"></TextView>
 	<TextView android:layout_width="wrap_content"
 		android:layout_height="wrap_content" android:text="10:10" android:id="@+id/time" android:layout_below="@+id/name"></TextView>
 	<TextView android:layout_height="wrap_content"
 		android:gravity="right" android:id="@+id/volume" android:text="12345678"
 		android:paddingRight="10sp"
-		android:layout_below="@+id/quote" android:layout_toRightOf="@+id/time" android:layout_width="180sp"></TextView>
+		android:layout_toRightOf="@+id/time" android:layout_width="180sp" android:layout_below="@+id/name"></TextView>
 	<TextView android:layout_height="wrap_content" android:id="@+id/change"
 		android:gravity="right" android:text="+1.5 (+0.02%) "
 		android:layout_width="wrap_content" android:layout_below="@+id/price" android:layout_alignParentRight="true"></TextView>

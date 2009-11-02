@@ -5,6 +5,7 @@ import hk.reality.stock.model.Index;
 import android.content.Context;
 import android.graphics.Color;
 import android.text.format.DateFormat;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,6 +13,7 @@ import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
 public class IndexAdapter extends ArrayAdapter<Index> {
+    private static final String TAG = "IndexAdapter";
     private java.text.DateFormat formatter;
 
     public IndexAdapter(Context context) {
@@ -28,6 +30,7 @@ public class IndexAdapter extends ArrayAdapter<Index> {
             v = (View) vi.inflate(R.layout.stock_item, null);
         }
 
+        Log.d(TAG, "prepare view for indexes");
         // prepare views
         TextView name = (TextView) v.findViewById(R.id.name);       
         TextView quote = (TextView) v.findViewById(R.id.quote);
@@ -58,6 +61,7 @@ public class IndexAdapter extends ArrayAdapter<Index> {
                 price.setTextColor(Color.WHITE);
                 change.setTextColor(Color.WHITE);
             }
+
         } else {
             time.setText("");
             volume.setText("---");
@@ -66,6 +70,7 @@ public class IndexAdapter extends ArrayAdapter<Index> {
             price.setText("----");
             change.setText("---- (---)");
         }
+
         quote.setVisibility(TextView.GONE);
         return v;
     }

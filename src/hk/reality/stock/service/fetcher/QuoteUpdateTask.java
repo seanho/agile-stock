@@ -109,15 +109,14 @@ public class QuoteUpdateTask extends AsyncTask<Stock, Integer, Boolean> {
 
     @Override
     protected void onCancelled() {
-        activity.setProgressBarVisibility(false);
+        activity.getParent().setProgressBarVisibility(false);        
         Toast.makeText(activity, R.string.msg_download_cancelled, Toast.LENGTH_SHORT);
     }
 
     @Override
     protected void onPostExecute(Boolean result) {
-        activity.setProgressBarVisibility(false);
         if (result) {
-            activity.refreshStockList();
+            activity.getAdapter().notifyDataSetChanged();
         } else {
             switch (error) {
             case ERROR_NO_NET:
@@ -136,19 +135,21 @@ public class QuoteUpdateTask extends AsyncTask<Stock, Integer, Boolean> {
                 break;
             }
         }
+
+        activity.getParent().setProgressBarVisibility(false);
     }
 
     @Override
     protected void onPreExecute() {
-        activity.setProgressBarVisibility(true);
-        activity.setProgress(0);
+        activity.getParent().setProgressBarVisibility(true);
+        activity.getParent().setProgress(0);
     }
 
     @Override
     protected void onProgressUpdate(Integer... values) {
         float progress = ((float) values[0] / (float) total) * 10000;
         Log.i(TAG, "downloaded " + values[0] + "/" + total + ", " + progress);
-        activity.setProgress((int) progress);
+        activity.getParent().setProgress((int) progress);
         activity.getAdapter().notifyDataSetChanged();
     }
 }

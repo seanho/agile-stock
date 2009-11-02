@@ -33,6 +33,7 @@ public class Money18QuoteFetcherTest extends TestCase {
     public void testGetStockNormal() {
         testStock("00005");
         testStock("03328");
+        testStock("00303");
     }
     
     public void testGetStockDerivatives() {

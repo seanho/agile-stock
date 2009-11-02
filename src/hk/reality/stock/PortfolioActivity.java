@@ -15,6 +15,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.DialogInterface.OnClickListener;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.text.InputType;
 import android.util.Log;
@@ -53,7 +54,7 @@ public class PortfolioActivity extends ListActivity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        requestWindowFeature(Window.FEATURE_PROGRESS);
+
         setContentView(R.layout.listview);
         adapter = new StockAdapter(this);        
         setListAdapter(adapter);
@@ -62,7 +63,6 @@ public class PortfolioActivity extends ListActivity {
         empty.setText(R.string.msg_add_stock);
         
         refreshStockList();
-        
         if (!SettingsActivity.getDisclaimerShown(this)) {
             showDialog(DIALOG_DISCLAIMER);
         }
@@ -70,12 +70,8 @@ public class PortfolioActivity extends ListActivity {
 
     public void refreshStockList() {
         Log.d(TAG, "refresh stock list");
-        List<Stock> stocks = StockApplication.getCurrentPortfolio().getStocks();
-        adapter.clear();
-        for(Stock s : stocks) {
-            adapter.add(s);
-        }
-        adapter.sort(new StockAdapter.StockQuoteSorter());
+        LoadStockTask task = new LoadStockTask();
+        task.execute();
     }
     
     public void updateStocks() {
@@ -337,5 +333,33 @@ public class PortfolioActivity extends ListActivity {
      */
     public StockAdapter getAdapter() {
         return adapter;
+    }
+    
+    class LoadStockTask extends AsyncTask<Void, Void, List<Stock>> {
+        @Override
+        protected List<Stock> doInBackground(Void... arg) {
+            return StockApplication.getCurrentPortfolio().getStocks();
+        }
+
+        @Override
+        protected void onPostExecute(List<Stock> result) {
+            if (result.size() == 0) {
+                TextView empty = (TextView) findViewById(android.R.id.empty);
+                empty.setText(R.string.msg_add_stock);
+            }
+            
+            adapter.clear();
+            for(Stock s : result) {
+                adapter.add(s);
+            }
+            adapter.sort(new StockAdapter.StockQuoteSorter());
+            adapter.notifyDataSetChanged();
+        }
+
+        @Override
+        protected void onPreExecute() {
+            TextView empty = (TextView) findViewById(android.R.id.empty);
+            empty.setText(R.string.msg_loading);
+        }
     }
 }

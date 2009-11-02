@@ -3,6 +3,7 @@ package hk.reality.stock;
 import android.app.TabActivity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.Window;
 import android.widget.TabHost;
 
 public class MainActivity extends TabActivity {    
@@ -12,17 +13,19 @@ public class MainActivity extends TabActivity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        TabHost host = getTabHost();
+        requestWindowFeature(Window.FEATURE_PROGRESS);
 
-        host.addTab(host
-                .newTabSpec(TAB_INDEX)
-                .setIndicator(getResources().getString(R.string.tab_index))
-                .setContent(new Intent(this, IndexActivity.class)));
+        TabHost host = getTabHost();
 
         host.addTab(host
                 .newTabSpec(TAB_STOCK)
                 .setIndicator(getResources().getString(R.string.tab_stock))
                 .setContent(new Intent(this, PortfolioActivity.class)));
+
+        host.addTab(host
+                .newTabSpec(TAB_INDEX)
+                .setIndicator(getResources().getString(R.string.tab_index))
+                .setContent(new Intent(this, IndexActivity.class)));
 
     }
 }

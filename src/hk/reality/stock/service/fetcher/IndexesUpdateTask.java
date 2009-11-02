@@ -14,6 +14,7 @@ public class IndexesUpdateTask extends AsyncTask<Void, Integer, Boolean> {
     public static final String TAG = "IndexesUpdateTask";
     private IndexActivity activity;
     private List<Index> results;
+
     private Error error;
     enum Error {
         ERROR_NO_NET, ERROR_DOWNLOAD, ERROR_PARSE, ERROR_UNKNOWN
@@ -46,12 +47,23 @@ public class IndexesUpdateTask extends AsyncTask<Void, Integer, Boolean> {
         }
         adapter.notifyDataSetChanged();
     }
+    
+    @Override
+    protected void onPreExecute() {
+        activity.getParent().setProgressBarVisibility(true);
+        activity.getParent().setProgressBarIndeterminateVisibility(true);
+    }
 
-    /* (non-Javadoc)
-     * @see android.os.AsyncTask#onPostExecute(java.lang.Object)
-     */
+    @Override
+    protected void onCancelled() {
+        activity.getParent().setProgressBarVisibility(false);
+        activity.getParent().setProgressBarIndeterminateVisibility(false);
+    }
+    
     @Override
     protected void onPostExecute(Boolean result) {
+        activity.getParent().setProgressBarVisibility(false);
+        activity.getParent().setProgressBarIndeterminateVisibility(false);
         if (result) {
             Log.i(TAG, "update success, number of results ..." + results.size());
             updateIndexes(results);
