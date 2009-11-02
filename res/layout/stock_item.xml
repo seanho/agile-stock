@@ -10,7 +10,7 @@
 			android:textSize="22sp" android:textColor="#FFFFFF" android:maxLines="1"
 			android:minLines="1" android:marqueeRepeatLimit="marquee_forever"
 			android:text="長江實業長 江實業 長江實業" android:ellipsize="marquee"
-			android:layout_width="fill_parent" android:layout_weight="1"></TextView>
+			android:layout_width="fill_parent" android:layout_weight="0.9"></TextView>
 		<TextView android:layout_height="wrap_content" android:id="@+id/quote"
 			android:text="00001" android:paddingRight="5sp" android:paddingLeft="10sp"
 			android:shadowColor="#88444444" android:shadowDx="1"
@@ -20,7 +20,7 @@
 			android:gravity="right" android:paddingLeft="5sp" android:textStyle="bold"
 			android:textColor="@color/normal" android:shadowColor="#88444444"
 			android:shadowDx="1" android:shadowDy="1" android:shadowRadius="1"
-			android:textSize="24sp" android:layout_width="90sp" android:text="794.100"></TextView>
+			android:textSize="24sp" android:text="794.100" android:layout_width="110sp"></TextView>
 	</LinearLayout>
 	<LinearLayout android:layout_height="wrap_content"
 		android:orientation="horizontal" android:layout_width="fill_parent">

@@ -43,8 +43,8 @@ public class IndexAdapter extends ArrayAdapter<Index> {
             volume.setText("");
             name.setText(index.getName());
             quote.setText("");
-            price.setText(String.format("%.03f", index.getValue().doubleValue()));
-            change.setText(String.format("%+.03f (%.02f%%)", 
+            price.setText(String.format("%.02f", index.getValue().doubleValue()));
+            change.setText(String.format("%+.02f (%.02f%%)", 
                     index.getChange().doubleValue(), 
                     index.getChangePercent().doubleValue()));
             
@@ -65,7 +65,8 @@ public class IndexAdapter extends ArrayAdapter<Index> {
             quote.setText("");
             price.setText("----");
             change.setText("---- (---)");
-        }        
+        }
+        quote.setVisibility(TextView.GONE);
         return v;
     }
 }

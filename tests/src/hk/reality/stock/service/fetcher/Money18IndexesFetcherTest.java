@@ -5,10 +5,10 @@ import hk.reality.stock.model.Index;
 import java.util.List;
 
 import junit.framework.Assert;
-import junit.framework.TestCase;
+import android.test.AndroidTestCase;
 import android.util.Log;
 
-public class Money18IndexesFetcherTest extends TestCase {
+public class Money18IndexesFetcherTest extends AndroidTestCase {
     public static final String TAG = "Money18IndexesFetcherTest";
     protected void setUp() throws Exception {
         super.setUp();
@@ -29,7 +29,7 @@ public class Money18IndexesFetcherTest extends TestCase {
     }
     
     protected IndexesFetcher getFetcher() {
-        return new Money18IndexesFetcher();
+        return new Money18IndexesFetcher(this.getContext());
     }
     
 }

@@ -22,6 +22,7 @@
     <string name="add_stock">Add Stock to portfolio</string>
 	<string name="add_stock_detail">Please enter a Hong Kong Stock Quote (e.g. 00001)</string>
 	
+	<string name="msg_hsi">Hang Seng Index</string>
 	<string name="msg_val_stock">Validating stock quote ...</string>
 	<string name="msg_error_download">Download Error</string>
 	<string name="msg_error_download_details">An error occurred while downloading file. Please make sure you have internet connection and try again.</string>

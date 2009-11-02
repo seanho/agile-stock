@@ -1,5 +1,6 @@
 package hk.reality.stock;
 
+import hk.reality.stock.service.fetcher.IndexesUpdateTask;
 import hk.reality.stock.view.IndexAdapter;
 import android.app.ListActivity;
 import android.os.Bundle;
@@ -18,9 +19,13 @@ public class IndexActivity extends ListActivity {
         
         adapter = new IndexAdapter(this);
         setListAdapter(adapter);
+        
+        Log.i(TAG, "start index activity");
+        IndexesUpdateTask task = new IndexesUpdateTask(this);
+        task.execute();
     }
     
-    public void updateIndexes() {
-        Log.d(TAG, "update index");
+    public IndexAdapter getIndexAdapter() {
+        return adapter;
     }
 }
