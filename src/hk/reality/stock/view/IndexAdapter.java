@@ -27,13 +27,12 @@ public class IndexAdapter extends ArrayAdapter<Index> {
         View v = view;
         if (v == null) {
             LayoutInflater vi = (LayoutInflater) getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            v = (View) vi.inflate(R.layout.stock_item, null);
+            v = (View) vi.inflate(R.layout.index_item, null);
         }
 
         Log.d(TAG, "prepare view for indexes");
         // prepare views
         TextView name = (TextView) v.findViewById(R.id.name);       
-        TextView quote = (TextView) v.findViewById(R.id.quote);
         TextView price = (TextView) v.findViewById(R.id.price);
         TextView change = (TextView) v.findViewById(R.id.change);
         TextView volume = (TextView) v.findViewById(R.id.volume);
@@ -45,7 +44,6 @@ public class IndexAdapter extends ArrayAdapter<Index> {
             time.setText(formatter.format(index.getUpdatedAt().getTime()));
             volume.setText("");
             name.setText(index.getName());
-            quote.setText("");
             price.setText(String.format("%.02f", index.getValue().doubleValue()));
             change.setText(String.format("%+.02f (%.02f%%)", 
                     index.getChange().doubleValue(), 
@@ -66,12 +64,9 @@ public class IndexAdapter extends ArrayAdapter<Index> {
             time.setText("");
             volume.setText("---");
             name.setText(index.getName());
-            quote.setText("");
             price.setText("----");
             change.setText("---- (---)");
         }
-
-        quote.setVisibility(TextView.GONE);
         return v;
     }
 }
