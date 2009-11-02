@@ -14,7 +14,8 @@ public class MainActivity extends TabActivity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_PROGRESS);
-
+        requestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS);
+        
         TabHost host = getTabHost();
 
         host.addTab(host

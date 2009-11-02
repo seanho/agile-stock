@@ -18,7 +18,7 @@ public class IndexActivity extends BaseStockActivity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        requestWindowFeature(Window.FEATURE_PROGRESS);
+
         setContentView(R.layout.listview);
         
         adapter = new IndexAdapter(this);
