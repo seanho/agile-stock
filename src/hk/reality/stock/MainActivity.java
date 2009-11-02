@@ -8,7 +8,8 @@ import android.widget.TabHost;
 
 public class MainActivity extends TabActivity {    
     public static final String TAB_STOCK = "stock";
-    public static final String TAB_INDEX = "index";    
+    public static final String TAB_INDEX = "index";
+    public static final String TAB_QUICK = "quick";
     
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -27,6 +28,10 @@ public class MainActivity extends TabActivity {
                 .newTabSpec(TAB_INDEX)
                 .setIndicator(getResources().getString(R.string.tab_index))
                 .setContent(new Intent(this, IndexActivity.class)));
-
+        
+//        host.addTab(host
+//                .newTabSpec(TAB_QUICK)
+//                .setIndicator(getResources().getString(R.string.tab_quick))
+//                .setContent(new Intent(this, QuickStockActivity.class)));
     }
 }

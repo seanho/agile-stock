@@ -14,6 +14,7 @@
 		</activity>
 		<activity android:name=".IndexActivity"></activity>
 		<activity android:name=".PortfolioActivity"></activity>
+		<activity android:name=".QuickStockActivity"></activity>
 		<activity android:name=".SettingsActivity"></activity>
 	</application>
 	<instrumentation android:name="android.test.InstrumentationTestRunner"

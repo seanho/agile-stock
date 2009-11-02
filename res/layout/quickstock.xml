@@ -1,0 +1,56 @@
+<LinearLayout android:id="@+id/LinearLayout01"
+	android:layout_width="fill_parent" android:layout_height="fill_parent"
+	xmlns:android="http://schemas.android.com/apk/res/android"
+	android:orientation="vertical">
+	<TextView android:id="@+id/quote" android:layout_height="wrap_content"
+		android:text="00001" android:layout_width="fill_parent" android:textSize="36sp" android:padding="4sp" android:lines="1"
+		android:layout_marginBottom="10sp" android:gravity="right" android:layout_margin="4sp"></TextView>
+
+	<LinearLayout android:layout_width="fill_parent"
+		android:layout_height="50sp">
+		<Button android:id="@+id/button7" android:text="7"
+			android:layout_width="fill_parent" android:layout_weight="1"
+			android:textSize="24sp" android:layout_height="50sp"></Button>
+		<Button android:id="@+id/button8" android:text="8"
+			android:layout_weight="1" android:layout_width="fill_parent"
+			android:textSize="24sp" android:layout_height="50sp"></Button>
+		<Button android:id="@+id/button9" android:text="9"
+			android:layout_weight="1" android:layout_width="fill_parent"
+			android:textSize="24sp" android:layout_height="50sp"></Button>
+	</LinearLayout>
+	<LinearLayout android:layout_width="fill_parent"
+		android:layout_height="50sp">
+		<Button android:id="@+id/button4" android:text="4"
+			android:layout_width="fill_parent" android:layout_weight="1"
+			android:textSize="24sp" android:layout_height="fill_parent"></Button>
+		<Button android:id="@+id/button5" android:text="5"
+			android:layout_weight="1" android:layout_width="fill_parent"
+			android:textSize="24sp" android:layout_height="fill_parent"></Button>
+		<Button android:id="@+id/button6" android:text="6"
+			android:layout_weight="1" android:layout_width="fill_parent"
+			android:textSize="24sp" android:layout_height="fill_parent"></Button>
+	</LinearLayout>
+	<LinearLayout android:layout_width="fill_parent"
+		android:layout_height="50sp">
+		<Button android:id="@+id/button1" android:text="1"
+			android:layout_width="fill_parent" android:layout_weight="1"
+			android:textSize="24sp" android:layout_height="fill_parent"></Button>
+		<Button android:id="@+id/button2" android:text="2"
+			android:layout_weight="1" android:layout_width="fill_parent"
+			android:textSize="24sp" android:layout_height="fill_parent"></Button>
+		<Button android:id="@+id/button3" android:text="3"
+			android:layout_weight="1" android:layout_width="fill_parent"
+			android:textSize="24sp" android:layout_height="fill_parent"></Button>
+	</LinearLayout>
+	<LinearLayout android:layout_width="fill_parent"
+		android:layout_height="50sp">
+		<Button android:id="@+id/button0" android:text="0"
+			android:layout_width="fill_parent" android:layout_weight="1"
+			android:textSize="24sp" android:height="30sp" android:layout_height="fill_parent"></Button>
+		<Button android:id="@+id/buttonEnter" android:layout_width="fill_parent"
+			android:text="Enter" android:layout_weight="2"
+			android:layout_height="fill_parent"></Button>
+	</LinearLayout>
+
+	
+</LinearLayout>

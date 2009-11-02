@@ -1,6 +1,6 @@
 <RelativeLayout android:id="@+id/RelativeLayout01"
 	android:layout_width="fill_parent" android:layout_height="fill_parent"
-	xmlns:android="http://schemas.android.com/apk/res/android" android:background="@drawable/item" android:padding="4sp">
+	xmlns:android="http://schemas.android.com/apk/res/android" android:background="@drawable/item">
 	<TextView android:id="@+id/name" android:layout_height="wrap_content"
 		android:lines="1" android:shadowRadius="1" android:shadowDx="1"
 		android:shadowDy="1" android:shadowColor="#88444444" android:textSize="22sp"
