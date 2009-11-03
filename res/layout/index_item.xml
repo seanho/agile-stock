@@ -7,7 +7,7 @@
 		android:textColor="#FFFFFF" android:maxLines="1" android:minLines="1"
 		android:marqueeRepeatLimit="marquee_forever" android:text="長江實業長 江實業 長江實業"
 		android:ellipsize="marquee" android:singleLine="true"
-		android:layout_alignParentLeft="true" android:layout_alignParentTop="true" android:layout_width="160sp"></TextView>
+		android:layout_alignParentLeft="true" android:layout_alignParentTop="true" android:layout_width="200sp"></TextView>
 	
 	<TextView android:id="@+id/price" android:layout_height="wrap_content"
 		android:gravity="right" android:paddingLeft="5sp" android:textStyle="bold"
@@ -23,6 +23,6 @@
 		android:layout_toRightOf="@+id/time" android:layout_width="180sp" android:layout_below="@+id/name"></TextView>
 	<TextView android:layout_height="wrap_content" android:id="@+id/change"
 		android:gravity="right" android:text="+1.5 (+0.02%) "
-		android:layout_width="wrap_content" android:layout_below="@+id/price" android:layout_alignParentRight="true"></TextView>
+		android:layout_width="wrap_content" android:layout_alignParentRight="true" android:layout_below="@+id/name"></TextView>
 
 </RelativeLayout>

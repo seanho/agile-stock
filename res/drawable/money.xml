@@ -1,0 +1,17 @@
+<selector android:id="@+id/money"
+	xmlns:android="http://schemas.android.com/apk/res/android">
+	<!-- Non focused states -->
+	<item android:state_focused="false" android:state_selected="false"
+		android:state_pressed="false" android:drawable="@drawable/ic_tab_money_unselected" />
+	<item android:state_focused="false" android:state_selected="true"
+		android:state_pressed="false" android:drawable="@drawable/ic_tab_money_selected" />
+
+	<!-- Focused states -->
+	<item android:state_focused="true" android:state_selected="false"
+		android:state_pressed="false" android:drawable="@drawable/ic_tab_money_unselected" />
+	<item android:state_focused="true" android:state_selected="true"
+		android:state_pressed="false" android:drawable="@drawable/ic_tab_money_selected" />
+
+	<!-- Pressed -->
+	<item android:state_pressed="true" android:drawable="@drawable/ic_tab_money_selected" />
+</selector>

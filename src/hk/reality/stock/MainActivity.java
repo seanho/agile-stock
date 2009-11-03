@@ -2,6 +2,7 @@ package hk.reality.stock;
 
 import android.app.TabActivity;
 import android.content.Intent;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.view.Window;
 import android.widget.TabHost;
@@ -18,20 +19,23 @@ public class MainActivity extends TabActivity {
         requestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS);
         
         TabHost host = getTabHost();
-
+        Drawable idxSelector = getResources().getDrawable(R.drawable.index);
+        Drawable moneySelector = getResources().getDrawable(R.drawable.money);
+        Drawable quickSelector = getResources().getDrawable(R.drawable.quick);
+        
         host.addTab(host
                 .newTabSpec(TAB_STOCK)
-                .setIndicator(getResources().getString(R.string.tab_stock))
+                .setIndicator(getResources().getString(R.string.tab_stock), moneySelector)
                 .setContent(new Intent(this, PortfolioActivity.class)));
-
+        
         host.addTab(host
                 .newTabSpec(TAB_INDEX)
-                .setIndicator(getResources().getString(R.string.tab_index))
+                .setIndicator(getResources().getString(R.string.tab_index), idxSelector)
                 .setContent(new Intent(this, IndexActivity.class)));
         
 //        host.addTab(host
 //                .newTabSpec(TAB_QUICK)
-//                .setIndicator(getResources().getString(R.string.tab_quick))
+//                .setIndicator(getResources().getString(R.string.tab_quick), quickSelector)
 //                .setContent(new Intent(this, QuickStockActivity.class)));
     }
 }

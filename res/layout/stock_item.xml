@@ -1,6 +1,6 @@
 <RelativeLayout android:id="@+id/RelativeLayout01"
 	android:layout_width="fill_parent" android:layout_height="fill_parent"
-	xmlns:android="http://schemas.android.com/apk/res/android" android:background="@drawable/item">
+	xmlns:android="http://schemas.android.com/apk/res/android" android:background="@drawable/item" android:padding="4sp">
 	<TextView android:id="@+id/name" android:layout_height="wrap_content"
 		android:lines="1" android:shadowRadius="1" android:shadowDx="1"
 		android:shadowDy="1" android:shadowColor="#88444444" android:textSize="22sp"
@@ -26,9 +26,9 @@
 	<TextView android:layout_height="wrap_content"
 		android:gravity="right" android:id="@+id/volume" android:text="12345678"
 		android:paddingRight="10sp"
-		android:layout_below="@+id/quote" android:layout_toRightOf="@+id/time" android:layout_width="180sp"></TextView>
+		android:layout_toRightOf="@+id/time" android:layout_width="180sp" android:layout_below="@+id/name"></TextView>
 	<TextView android:layout_height="wrap_content" android:id="@+id/change"
 		android:gravity="right" android:text="+1.5 (+0.02%) "
-		android:layout_width="wrap_content" android:layout_below="@+id/price" android:layout_alignParentRight="true"></TextView>
+		android:layout_width="wrap_content" android:layout_alignParentRight="true" android:layout_below="@+id/name"></TextView>
 
 </RelativeLayout>
