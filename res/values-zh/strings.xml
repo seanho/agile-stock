@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Agile Stock</string>
+    <string name="msg_add_stock">請按「選單」&gt; 「新增」加入新的股票。</string>
+    <string name="msg_loading">載入中，請稍候...</string>
+    
+    <string name="about_title">關於本軟體</string>
+    <string name="disclaimer_label">免責條款</string>
+    <string name="msg_disclaimer">本軟件顯示的資料乃根據在第三方網站所提供的公開資料。\n\n我們不保證該等資料絕對正確可靠；對於任何因資料不確或遺漏又或因根據或倚賴本網站資料所作決定、行動或不行動而引致之損失或損害，本軟體概不負責（不論是民事侵權行為責任或合約責任或其他）。</string>
+    <string name="msg_about">本軟體由 @siuying (http://twitter.com/siuying) 提供\n\n資料來自 HKEX (http://www.hkex.com.hk) 和 Money 18 (http://money18.on.cc)的公開網站 \n\nAgile Stock 使用以下開源軟體：\n * HtmlCleaner\n * XStream\n * Apache Commons IO\n * Apache Commons Lang</string>
+    <string name="retry_label">重試</string>
+    <string name="ok_label">確認</string>
+    <string name="cancel_label">取消</string>
+    
+    <string name="refresh_label">重新載入</string>
+    <string name="add_label">新增</string>
+    <string name="setting_label">設定</string>
+    <string name="new_portfolio_label">我的投資組合</string>
+    
+    <string name="action_open">更多資訊 ...</string>
+    <string name="action_delete">刪除</string>
+    <string name="add_stock">把股票加到投資組合</string>
+	<string name="add_stock_detail">請輸入香港股票編號 (如：00001)</string>
+	
+	<string name="msg_hsi">恆生指數</string>
+	<string name="msg_val_stock">正在確認你輸入的股票 ...</string>
+	<string name="msg_error_download">下載錯誤</string>
+	<string name="msg_error_download_details">未能下載資料。請確認你的互聯網連線，然後重試。</string>
+	<string name="msg_error_unexpected">找不到股票</string>
+	<string name="msg_error_unexpected_details">找不到您輸入的股票編號。請確認你輸入了正確的香港股票編號然後重試。</string>
+	<string name="msg_error_stock">不明的錯誤</string>
+	<string name="msg_error_stock_details">未能解讀股票資料，伺服器可能暫時未能提供服務。</string>
+	<string name="msg_stock_existed">這個股票已在投資組合中</string>
+	<string name="msg_stock_added">已新增股票到投資組合</string>	
+	<string name="msg_download_cancelled">取消下載</string>
+	<string name="msg_no_network">沒有網路連線，請在連線回復後重試</string>
+	<string name="msg_error_unexpect">不明的錯誤</string>
+	<string name="msg_error_unexpect_details">抱歉，系統發生不明的錯誤。</string>
+
+	<string name="setting_auto_refresh">Auto Refresh</string>
+	<string name="time_1m">1 minutes</string>
+	<string name="time_5m">5 minutes</string>
+	<string name="time_15m">15 minutes</string>
+	<string name="setting_auto_refresh_time">Update Interval</string>
+	<string name="setting_auto_refresh_time_summary">Longer values save your battery.</string>
+	
+	<string name="tab_stock">投資組合</string>
+	<string name="tab_index">環球指數</string>
+	<string name="tab_quick">快速股價</string>
+</resources>
