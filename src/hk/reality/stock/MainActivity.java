@@ -17,22 +17,21 @@ public class MainActivity extends TabActivity {
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_PROGRESS);
         requestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS);
-        
-        TabHost host = getTabHost();
-        Drawable idxSelector = getResources().getDrawable(R.drawable.index);
+
+        TabHost host = getTabHost();        
         Drawable moneySelector = getResources().getDrawable(R.drawable.money);
-        Drawable quickSelector = getResources().getDrawable(R.drawable.quick);
-        
         host.addTab(host
                 .newTabSpec(TAB_STOCK)
                 .setIndicator(getResources().getString(R.string.tab_stock), moneySelector)
                 .setContent(new Intent(this, PortfolioActivity.class)));
-        
+
+        Drawable idxSelector = getResources().getDrawable(R.drawable.index);        
         host.addTab(host
                 .newTabSpec(TAB_INDEX)
                 .setIndicator(getResources().getString(R.string.tab_index), idxSelector)
                 .setContent(new Intent(this, IndexActivity.class)));
-        
+
+//        Drawable quickSelector = getResources().getDrawable(R.drawable.quick);        
 //        host.addTab(host
 //                .newTabSpec(TAB_QUICK)
 //                .setIndicator(getResources().getString(R.string.tab_quick), quickSelector)

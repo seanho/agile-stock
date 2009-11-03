@@ -18,9 +18,8 @@ public class IndexAdapter extends ArrayAdapter<Index> {
 
     public IndexAdapter(Context context) {
         super(context, 0);
-        formatter = DateFormat.getTimeFormat(context);
+        formatter = DateFormat.getTimeFormat(context);        
     }
-
 
     @Override
     public View getView(int position, View view, ViewGroup parent) {
@@ -41,18 +40,28 @@ public class IndexAdapter extends ArrayAdapter<Index> {
         // set data
         Index index = getItem(position);
         if (index != null && index.getUpdatedAt() != null) {
-            time.setText(formatter.format(index.getUpdatedAt().getTime()));
             volume.setText("");
             name.setText(index.getName());
             price.setText(String.format("%.02f", index.getValue().doubleValue()));
-            change.setText(String.format("%+.02f (%.02f%%)", 
+
+            if (index.getUpdatedAt() != null) {
+                time.setText(formatter.format(index.getUpdatedAt().getTime()));
+            } else {
+                time.setText("-----");
+            }
+            
+            if (index.getChange() != null) {
+                change.setText(String.format("%+.02f (%.02f%%)", 
                     index.getChange().doubleValue(), 
                     index.getChangePercent().doubleValue()));
+            } else {
+                change.setText("---- (---)");
+            }
             
-            if (index.getChange().floatValue() > 0) {
+            if (index.getChange() != null && index.getChange().floatValue() > 0) {
                 price.setTextColor(Color.rgb(0, 213, 65));
                 change.setTextColor(Color.rgb(0, 213, 65));
-            } else if (index.getChange().floatValue() < 0) {
+            } else if (index.getChange() != null && index.getChange().floatValue() < 0) {
                 price.setTextColor(Color.rgb(238, 30, 0));
                 change.setTextColor(Color.rgb(238, 30, 0));
             } else {

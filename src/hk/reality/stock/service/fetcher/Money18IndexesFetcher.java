@@ -35,9 +35,10 @@ public class Money18IndexesFetcher extends BaseIndexesFetcher {
     public List<Index> fetch() throws DownloadException, ParseException {
         List<Index> indexes = new ArrayList<Index>();
         indexes.add(getHsi());
+        indexes.addAll(getWorldIndexes());
         return indexes;
     }
-    
+
     private Index getHsi() throws ParseException, DownloadException {
         try {
             Index hsi = new Index();
@@ -88,6 +89,50 @@ public class Money18IndexesFetcher extends BaseIndexesFetcher {
         String result = StringUtils.substring(content, pos);
         JSONObject json = new JSONObject(result);
         return json;
+    }
+    
+    private List<Index> getWorldIndexes()  throws ParseException, DownloadException {
+        try {
+            HttpGet req = new HttpGet(getWorldIndexURL());
+            req.setHeader("Referer", "http://money18.on.cc/");
+    
+            HttpResponse resp = getClient().execute(req);
+            String content = EntityUtils.toString(resp.getEntity(), "Big5");
+            return getWorldIndexesFromJson(content);
+        } catch (org.apache.http.ParseException pe) {
+            throw new ParseException("error parsing http data", pe);
+        } catch (JSONException je) {
+            throw new ParseException("error parsing http data", je);
+        } catch (IOException ie) {
+            throw new DownloadException("error parsing http data", ie);
+        }
+    }
+    
+    private List<Index> getWorldIndexesFromJson(String content) throws JSONException {
+        List<Index> indexes = new ArrayList<Index>();
+        int start = content.indexOf('{');
+        while (start > 0) {
+            int end = content.indexOf(";", start);
+            String result = StringUtils.substring(content, start, end);
+            JSONObject json = new JSONObject(result);
+            String name = json.getString("Name");
+            String value = json.getString("Point");
+            String diff = json.getString("Difference");
+
+            Index index = new Index();
+            index.setName(name);
+            index.setValue(new BigDecimal(value));
+            
+            if (diff != null && !StringUtils.equalsIgnoreCase(diff, "null"))
+                index.setChange(new BigDecimal(diff));
+            
+            if (diff != null && !StringUtils.equalsIgnoreCase(diff, "null"))
+                index.setChangePercent(new BigDecimal(json.getDouble("Difference") - json.getDouble("Point")));
+
+            indexes.add(index);
+            start = content.indexOf('{', end);
+        }
+        return indexes;
     }
 
     /**
