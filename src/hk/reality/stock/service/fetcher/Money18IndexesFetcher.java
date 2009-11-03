@@ -123,11 +123,12 @@ public class Money18IndexesFetcher extends BaseIndexesFetcher {
             index.setName(name);
             index.setValue(new BigDecimal(value));
             
-            if (diff != null && !StringUtils.equalsIgnoreCase(diff, "null"))
+            if (diff != null && !StringUtils.equalsIgnoreCase(diff, "null")) {
                 index.setChange(new BigDecimal(diff));
             
-            if (diff != null && !StringUtils.equalsIgnoreCase(diff, "null"))
-                index.setChangePercent(new BigDecimal(json.getDouble("Difference") - json.getDouble("Point")));
+            	double changePercent = index.getValue().doubleValue() / (index.getValue().doubleValue() - index.getChange().doubleValue()) - 1;
+                index.setChangePercent(new BigDecimal(changePercent));
+            }
 
             indexes.add(index);
             start = content.indexOf('{', end);

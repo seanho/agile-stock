@@ -2,6 +2,7 @@ package hk.reality.stock.view;
 
 import hk.reality.stock.R;
 import hk.reality.stock.model.Index;
+import hk.reality.utils.PriceFormatter;
 import android.content.Context;
 import android.graphics.Color;
 import android.text.format.DateFormat;
@@ -42,7 +43,7 @@ public class IndexAdapter extends ArrayAdapter<Index> {
         if (index != null) {
             volume.setText("");
             name.setText(index.getName());
-            price.setText(String.format("%.02f", index.getValue().doubleValue()));
+            price.setText(PriceFormatter.forPrice(index.getValue().doubleValue()));
 
             if (index.getUpdatedAt() != null) {
                 time.setText(formatter.format(index.getUpdatedAt().getTime()));
@@ -51,9 +52,9 @@ public class IndexAdapter extends ArrayAdapter<Index> {
             }
             
             if (index.getChange() != null) {
-                change.setText(String.format("%+.02f (%.02f%%)", 
-                    index.getChange().doubleValue(), 
-                    index.getChangePercent().doubleValue()));
+                change.setText(String.format("%s (%s)", 
+                		PriceFormatter.forPrice(index.getChange().doubleValue()), 
+                		PriceFormatter.forPercent(index.getChangePercent().doubleValue())));
             } else {
                 change.setText("---- (---)");
             }

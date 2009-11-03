@@ -3,6 +3,7 @@ package hk.reality.stock.view;
 import hk.reality.stock.R;
 import hk.reality.stock.model.Stock;
 import hk.reality.stock.model.StockDetail;
+import hk.reality.utils.PriceFormatter;
 
 import java.util.Comparator;
 
@@ -48,10 +49,10 @@ public class StockAdapter extends ArrayAdapter<Stock> {
             volume.setText(detail.getVolume());
             name.setText(stock.getName());
             quote.setText(detail.getQuote());
-            price.setText(String.format("%.03f", detail.getPrice().doubleValue()));
-            change.setText(String.format("%+.03f (%.02f%%)", 
-                    detail.getChangePrice().doubleValue(), 
-                    detail.getChangePricePercent().doubleValue()));
+            price.setText(PriceFormatter.forPrice(detail.getPrice().doubleValue()));
+            change.setText(String.format("%s (%s)", 
+            		PriceFormatter.forPrice(detail.getChangePrice().doubleValue()), 
+            		PriceFormatter.forPercent(detail.getChangePricePercent().doubleValue())));
             
             if (detail.getChangePrice().floatValue() > 0) {
                 price.setTextColor(Color.rgb(0, 213, 65));
