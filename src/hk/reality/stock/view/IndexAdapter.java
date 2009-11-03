@@ -39,7 +39,7 @@ public class IndexAdapter extends ArrayAdapter<Index> {
         
         // set data
         Index index = getItem(position);
-        if (index != null && index.getUpdatedAt() != null) {
+        if (index != null) {
             volume.setText("");
             name.setText(index.getName());
             price.setText(String.format("%.02f", index.getValue().doubleValue()));
@@ -47,7 +47,7 @@ public class IndexAdapter extends ArrayAdapter<Index> {
             if (index.getUpdatedAt() != null) {
                 time.setText(formatter.format(index.getUpdatedAt().getTime()));
             } else {
-                time.setText("-----");
+                time.setText("");
             }
             
             if (index.getChange() != null) {
@@ -72,7 +72,7 @@ public class IndexAdapter extends ArrayAdapter<Index> {
         } else {
             time.setText("");
             volume.setText("---");
-            name.setText(index.getName());
+            name.setText("");
             price.setText("----");
             change.setText("---- (---)");
         }
